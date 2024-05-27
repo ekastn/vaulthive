@@ -16,23 +16,14 @@ public class GameController {
 
     private final GameService gameService;
 
-    GameController(GameService gameService) {
+    public GameController(GameService gameService) {
         this.gameService = gameService;
     }
 
-
-    // endpoint for searching games by name using uri like /api/games?search={name}
     @GetMapping
     public PagedResponse<Game> searchGameByName(@RequestParam String name) {
         return gameService.findGameByName(name);
     }
-
-
-
-    // @GetMapping("/search/{name}")
-    // public PagedResponse<Game> searchGameByName(@PathVariable String name) {
-    //     return gameService.findGameByName(name);
-    // }
 
     @GetMapping("/{id}")
     public Game getGameDetails(@PathVariable long id) {
