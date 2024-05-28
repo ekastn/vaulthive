@@ -14,6 +14,13 @@ public final class TestData {
                 .build();
     }
 
+    public static ListEntity createListEntityB() {
+        return ListEntity.builder()
+                .title("A pieceful night")
+                .description("For those who want to relax")
+                .build();
+    }
+
     public static ListGameEntity createlistGameEntity(int gameId) {
         return ListGameEntity.builder()
                 .gameId(gameId)

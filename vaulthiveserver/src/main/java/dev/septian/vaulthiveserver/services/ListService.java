@@ -7,4 +7,6 @@ import dev.septian.vaulthiveserver.domain.ListEntity;
 public interface ListService {
     ListEntity save(ListEntity listEntity);
     List<ListEntity> findAll();
+    ListEntity update(int id, ListEntity listEntity);
+    boolean isExists(int id);
 }

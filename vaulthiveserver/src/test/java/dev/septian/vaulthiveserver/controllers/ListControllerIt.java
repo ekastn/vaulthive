@@ -80,4 +80,116 @@ public class ListControllerIt {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.listGames[2].gameId").value(3345));
     }
 
+    @Test
+    public void testThatGetListsReturnsHttpStatus200Ok() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/lists/"))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void testThatGetListsReturnsEmptyList() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/lists/"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$").isArray())
+                .andExpect(MockMvcResultMatchers.jsonPath("$").isEmpty());
+    }
+
+    @Test
+    public void testThatGetListsReturnsList() throws Exception {
+        ListEntity listEntity = TestData.createListEntityA();
+        ListGameEntity item1 = TestData.createlistGameEntity(2345);
+        ListGameEntity item2 = TestData.createlistGameEntity(2346);
+        ListGameEntity item3 = TestData.createlistGameEntity(3345);
+
+        listEntity.add(item1);
+        listEntity.add(item2);
+        listEntity.add(item3);
+
+        listService.save(listEntity);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/lists/"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$").isArray())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").exists())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].title").value("A pieceful day"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].listGames").isArray());
+    }
+
+    @Test
+    public void testThatUpdateListReturnsHttpStatus200Ok() throws Exception {
+        ListEntity listEntity = TestData.createListEntityA();
+        ListGameEntity item1 = TestData.createlistGameEntity(2345);
+        ListGameEntity item2 = TestData.createlistGameEntity(2346);
+        ListGameEntity item3 = TestData.createlistGameEntity(3345);
+
+        listEntity.add(item1);
+        listEntity.add(item2);
+        listEntity.add(item3);
+
+        listService.save(listEntity);
+
+        listEntity.setTitle("A pieceful night");
+
+        String listJson = objectMapper.writeValueAsString(listEntity);
+
+        mockMvc.perform(MockMvcRequestBuilders.patch("/api/lists/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(listJson)).andExpect(
+                        MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void testThatUpdateListReturnsUpdatedList() throws Exception {
+        ListEntity listEntity = TestData.createListEntityA();
+        ListGameEntity item1 = TestData.createlistGameEntity(2345);
+        ListGameEntity item2 = TestData.createlistGameEntity(2346);
+        ListGameEntity item3 = TestData.createlistGameEntity(3345);
+
+        listEntity.add(item1);
+        listEntity.add(item2);
+        listEntity.add(item3);
+
+        listService.save(listEntity);
+
+        listEntity.setTitle("A pieceful night");
+        listEntity.setDescription("A pieceful night with a pieceful game");
+
+        String listJson = objectMapper.writeValueAsString(listEntity);
+
+        mockMvc.perform(MockMvcRequestBuilders.patch("/api/lists/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(listJson))
+                .andExpect(
+                        MockMvcResultMatchers.status().isOk())
+                .andExpect(
+                        MockMvcResultMatchers.jsonPath("$.id").exists())
+                .andExpect(
+                        MockMvcResultMatchers.jsonPath("$.title").value("A pieceful night"))
+                .andExpect(
+                        MockMvcResultMatchers.jsonPath("$.description").value("A pieceful night with a pieceful game"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.listGames").isArray());
+    }
+
+    @Test
+    public void testThatIpdateListReturnsHttpStatus404NotFound() throws Exception {
+        ListEntity listEntity = TestData.createListEntityA();
+        ListGameEntity item1 = TestData.createlistGameEntity(2345);
+        ListGameEntity item2 = TestData.createlistGameEntity(2346);
+        ListGameEntity item3 = TestData.createlistGameEntity(3345);
+
+        listEntity.add(item1);
+        listEntity.add(item2);
+        listEntity.add(item3);
+
+        listService.save(listEntity);
+
+        listEntity.setTitle("A pieceful night");
+
+        String listJson = objectMapper.writeValueAsString(listEntity);
+
+        mockMvc.perform(MockMvcRequestBuilders.patch("/api/lists/2")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(listJson)).andExpect(
+                        MockMvcResultMatchers.status().isNotFound());
+    }
 }

@@ -1,6 +1,7 @@
 package dev.septian.vaulthiveserver.services.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -25,5 +26,23 @@ public class ListServiceImpl implements ListService {
     public List<ListEntity> findAll() {
         return listRepository.findAll();
     }
-    
+
+    @Override
+    public ListEntity update(int id, ListEntity listEntity) {
+        return listRepository.findById(id).map(existingEntity -> {
+            Optional.ofNullable(listEntity.getTitle()).ifPresent(existingEntity::setTitle);
+            Optional.ofNullable(listEntity.getDescription()).ifPresent(existingEntity::setDescription);
+            if (listEntity.getListGames() != null) {
+                existingEntity.getListGames().clear();
+                existingEntity.getListGames().addAll(listEntity.getListGames());
+            }
+            return listRepository.save(existingEntity);
+        }).orElseThrow(() -> new RuntimeException("List does not exist"));
+    }
+
+    @Override
+    public boolean isExists(int id) {
+        return listRepository.existsById(id);
+    }
+
 }
