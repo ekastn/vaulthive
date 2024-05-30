@@ -45,4 +45,14 @@ public class ListServiceImpl implements ListService {
         return listRepository.existsById(id);
     }
 
+    @Override
+    public void delete(int id) {
+        listRepository.deleteById(id);
+    }
+
+    @Override
+    public Optional<ListEntity> findOne(int id) {
+        return listRepository.findById(id);
+    }
+
 }

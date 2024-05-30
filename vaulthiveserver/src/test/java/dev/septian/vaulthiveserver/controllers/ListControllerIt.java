@@ -192,4 +192,70 @@ public class ListControllerIt {
                 .content(listJson)).andExpect(
                         MockMvcResultMatchers.status().isNotFound());
     }
+
+    @Test
+    public void testThatGetListReturnsHttpStatus200Ok() throws Exception {
+        ListEntity listEntity = TestData.createListEntityA();
+        ListGameEntity item1 = TestData.createlistGameEntity(2345);
+        ListGameEntity item2 = TestData.createlistGameEntity(2346);
+        ListGameEntity item3 = TestData.createlistGameEntity(3345);
+
+        listEntity.add(item1);
+        listEntity.add(item2);
+        listEntity.add(item3);
+
+        listService.save(listEntity);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/lists/1"))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void testThatGetListReturnsHttpStatus404NotFound() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/lists/1"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
+    public void testThatDeleteListReturnsHttpStatus204NoContent() throws Exception {
+        ListEntity listEntity = TestData.createListEntityA();
+        ListGameEntity item1 = TestData.createlistGameEntity(2345);
+        ListGameEntity item2 = TestData.createlistGameEntity(2346);
+        ListGameEntity item3 = TestData.createlistGameEntity(3345);
+
+        listEntity.add(item1);
+        listEntity.add(item2);
+        listEntity.add(item3);
+
+        listService.save(listEntity);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/lists/1"))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
+
+    @Test
+    public void testThatDeleteListReturnsHttpStatus404NotFound() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/lists/1"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
+    public void testThatDeleteListActuallyDeletes() throws Exception {
+        ListEntity listEntity = TestData.createListEntityA();
+        ListGameEntity item1 = TestData.createlistGameEntity(2345);
+        ListGameEntity item2 = TestData.createlistGameEntity(2346);
+        ListGameEntity item3 = TestData.createlistGameEntity(3345);
+
+        listEntity.add(item1);
+        listEntity.add(item2);
+        listEntity.add(item3);
+
+        listService.save(listEntity);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/lists/1"))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/lists/1"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
 }

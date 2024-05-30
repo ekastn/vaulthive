@@ -8,9 +8,11 @@ import dev.septian.vaulthiveserver.services.ListService;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,6 +40,14 @@ public class ListController {
         return new ResponseEntity<>(listService.findAll(), HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ListEntity> getList(@PathVariable int id) {
+        Optional<ListEntity> foundList = listService.findOne(id);
+        return foundList.map(listEntity -> {
+            return new ResponseEntity<>(listEntity, HttpStatus.OK);
+        }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
     @PatchMapping("/{id}")
     public ResponseEntity<ListEntity> updateList(@RequestBody ListEntity listEntity, @PathVariable int id) {
         if (!listService.isExists(id)) {
@@ -45,6 +55,15 @@ public class ListController {
         }
         ListEntity updatedList = listService.update(id, listEntity);
         return new ResponseEntity<>(updatedList, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteList(@PathVariable int id) {
+        if (!listService.isExists(id)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        listService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }
