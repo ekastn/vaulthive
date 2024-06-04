@@ -7,7 +7,15 @@ export default {
         fontFamily: {
             sans: ["Inter", "sans-serif", ...defaultTheme.fontFamily.sans],
         },
-        extend: {},
+        extend: {
+            colors: {
+                txMain: "#e9e8f1",
+                bgMain: "#0a0814",
+                primary: "#9e94e5",
+                secondary: "#20108e",
+                accent: "#4228fd",
+            },
+        },
     },
     plugins: [],
 };
