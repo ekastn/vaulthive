@@ -13,12 +13,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SpringBootTest
-public class RawgClientTest {
+public class GameClientTest {
 
     private GameClient underTest;
 
     @Autowired
-    RawgClientTest(GameClient gameClient) {
+    GameClientTest(GameClient gameClient) {
         this.underTest = gameClient;
     }
 
