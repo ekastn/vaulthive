@@ -10,7 +10,7 @@ public class WebConfig {
     @Bean
     public RestClient restClient(RestClient.Builder builder) {
         return builder
-            .baseUrl("https://api.rawg.io/api/")
+            .baseUrl("https://api.rawg.io/api")
             .build();
     }
     

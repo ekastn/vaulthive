@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
 import dev.septian.vaulthiveserver.domain.Game;
-import dev.septian.vaulthiveserver.domain.PagedResponse;
+import dev.septian.vaulthiveserver.domain.RawgPagedResponse;
 import dev.septian.vaulthiveserver.services.GameService;
 
 @Service
@@ -33,7 +33,7 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public PagedResponse<Game> findGameByName(String name) {
+    public RawgPagedResponse<Game> findGameByName(String name) {
         return restClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/games")
@@ -42,7 +42,7 @@ public class GameServiceImpl implements GameService {
                         .queryParam("page_size", 10)
                         .build())
                 .retrieve()
-                .body(new ParameterizedTypeReference<PagedResponse<Game>>() {
+                .body(new ParameterizedTypeReference<RawgPagedResponse<Game>>() {
                 });
     }
 }

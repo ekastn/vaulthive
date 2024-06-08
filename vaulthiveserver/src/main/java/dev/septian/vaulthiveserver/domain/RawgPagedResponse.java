@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PagedResponse<T> {
+public class RawgPagedResponse<T> {
     private int count;
     private String next;
     private String previous;

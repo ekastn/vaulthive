@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.septian.vaulthiveserver.domain.Game;
-import dev.septian.vaulthiveserver.domain.PagedResponse;
+import dev.septian.vaulthiveserver.domain.RawgPagedResponse;
 import dev.septian.vaulthiveserver.services.GameService;
 
 @RestController
@@ -21,7 +21,7 @@ public class GameController {
     }
 
     @GetMapping
-    public PagedResponse<Game> searchGameByName(@RequestParam String name) {
+    public RawgPagedResponse<Game> searchGameByName(@RequestParam String name) {
         return gameService.findGameByName(name);
     }
 
