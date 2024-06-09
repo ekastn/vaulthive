@@ -19,5 +19,5 @@ public class ListDto {
 
     private String description;
 
-    private Set<ListGameDto> listGames;
+    private Set<GameDto> games;
 }

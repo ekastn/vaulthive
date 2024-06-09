@@ -32,9 +32,9 @@ public class ListServiceImpl implements ListService {
         return listRepository.findById(id).map(existingEntity -> {
             Optional.ofNullable(listEntity.getTitle()).ifPresent(existingEntity::setTitle);
             Optional.ofNullable(listEntity.getDescription()).ifPresent(existingEntity::setDescription);
-            if (listEntity.getListGames() != null) {
-                existingEntity.getListGames().clear();
-                existingEntity.getListGames().addAll(listEntity.getListGames());
+            if (listEntity.getGames() != null) {
+                existingEntity.getGames().clear();
+                existingEntity.getGames().addAll(listEntity.getGames());
             }
             return listRepository.save(existingEntity);
         }).orElseThrow(() -> new RuntimeException("List does not exist"));

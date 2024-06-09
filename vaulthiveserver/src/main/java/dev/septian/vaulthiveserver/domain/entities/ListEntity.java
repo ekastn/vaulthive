@@ -11,14 +11,18 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -27,7 +31,7 @@ import lombok.NoArgsConstructor;
 public class ListEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(nullable = false)
     private String title;
@@ -36,16 +40,12 @@ public class ListEntity {
     private String description;
 
     @Builder.Default
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JoinColumn(name = "list_id", referencedColumnName = "id")
-    private Set<ListGameEntity> listGames = new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+        name = "list_games",
+        joinColumns = @JoinColumn(name = "list_id"),
+        inverseJoinColumns = @JoinColumn(name = "game_id")
+    )
+    private Set<GameEntity> games = new HashSet<>();
 
-    public void add(ListGameEntity item) {
-        if (item != null) {
-            if (listGames == null) {
-                listGames = new HashSet<>();
-            }
-            listGames.add(item);
-        }
-    }
 }

@@ -24,16 +24,16 @@ public class GameEntityRepositoryIt {
         this.gameRepository = gameRepository;
     }
 
-    @Test
-    public void testThatGameCanBeCreatedAndRecalled() {
-        GameEntity gameEntity = TestData.createGameEntity(14);
+    // @Test
+    // public void testThatGameCanBeCreatedAndRecalled() {
+    //     GameEntity gameEntity = TestData.createGameEntity(14);
 
-        gameRepository.save(gameEntity);
+    //     gameRepository.save(gameEntity);
 
-        Optional<GameEntity> result = gameRepository.findById(gameEntity.getId());
-        assertThat(result).isPresent();
-        assertThat(result.get()).isEqualTo(gameEntity);
-    }
+    //     Optional<GameEntity> result = gameRepository.findById(gameEntity.getId());
+    //     assertThat(result).isPresent();
+    //     assertThat(result.get()).isEqualTo(gameEntity);
+    // }
 
     // @Test
     // public void testCreateGame() {

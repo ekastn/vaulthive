@@ -21,12 +21,14 @@ public class GameClientImpl implements GameClient {
     @Value("${RAWG_API_KEY}")
     private String apiKey;
 
+    private String endpoint = "/games";
+
     public GameClientImpl(RestClient restClient) {
         this.restClient = restClient;
     }
 
     @Override
-    public RawgPagedResponse<GameDto> getData(String endpoint) {
+    public RawgPagedResponse<GameDto> getData() {
         return restClient.get()
                 .uri(uriBuilder -> uriBuilder.path(endpoint)
                         .queryParam("key", apiKey)
@@ -37,7 +39,7 @@ public class GameClientImpl implements GameClient {
     }
 
     @Override
-    public RawgPagedResponse<GameDto> getData(String endpoint, Map<String, String> params) {
+    public RawgPagedResponse<GameDto> getData(Map<String, String> params) {
         return restClient.get()
                 .uri(uriBuilder -> uriBuilder.path(endpoint)
                         .queryParam("key", apiKey)
@@ -49,7 +51,7 @@ public class GameClientImpl implements GameClient {
     }
 
     @Override
-    public GameDto getDetails(String endpoint, long id) {
+    public GameDto getDetails(int id) {
         return restClient.get()
                 .uri(uriBuilder -> uriBuilder.path(endpoint + "/" + id)
                         .queryParam("key", apiKey)

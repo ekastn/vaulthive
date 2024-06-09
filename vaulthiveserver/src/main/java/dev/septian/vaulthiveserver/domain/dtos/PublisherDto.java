@@ -1,5 +1,7 @@
 package dev.septian.vaulthiveserver.domain.dtos;
 
+import java.util.Set;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
@@ -19,4 +21,6 @@ public class PublisherDto {
     private String name;
 
     private int gameCount;
+
+    private Set<GameDto> games;
 }

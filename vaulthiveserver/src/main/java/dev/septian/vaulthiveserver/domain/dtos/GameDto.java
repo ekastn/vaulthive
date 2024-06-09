@@ -33,5 +33,5 @@ public class GameDto {
 
     private Set<PublisherDto> publishers;
 
-    Set<ListGameDto> listGames;
+    private Set<ListDto> lists;
 }

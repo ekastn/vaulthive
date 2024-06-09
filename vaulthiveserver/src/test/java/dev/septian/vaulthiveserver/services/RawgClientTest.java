@@ -24,7 +24,7 @@ public class RawgClientTest {
 
     @Test
     public void testThatGetDataRetrievesData() {
-        RawgPagedResponse<GameDto> result = underTest.getData("/games");
+        RawgPagedResponse<GameDto> result = underTest.getData();
         assertThat(result).isNotNull();
         assertThat(result.getResults()).isNotEmpty();
     }
@@ -33,14 +33,14 @@ public class RawgClientTest {
     public void testThatGetDataWithParamsRetrievesData() {
         Map<String, String> params = new HashMap<>();
         params.put("search", "fifa");
-        RawgPagedResponse<GameDto> result = underTest.getData("/games", params);
+        RawgPagedResponse<GameDto> result = underTest.getData(params);
         assertThat(result).isNotNull();
         assertThat(result.getResults()).isNotEmpty();
     }
 
     @Test
     public void testThatGetDetailsRetrievesData() {
-        GameDto result = underTest.getDetails("/games", 3498);
+        GameDto result = underTest.getDetails(3498);
         assertThat(result).isNotNull();
         assertThat(result.getId()).isEqualTo(3498);
     }

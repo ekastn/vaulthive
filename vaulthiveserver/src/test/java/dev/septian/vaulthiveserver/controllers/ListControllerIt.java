@@ -1,5 +1,8 @@
 package dev.septian.vaulthiveserver.controllers;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -13,8 +16,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dev.septian.vaulthiveserver.TestData;
+import dev.septian.vaulthiveserver.domain.entities.GameEntity;
 import dev.septian.vaulthiveserver.domain.entities.ListEntity;
-import dev.septian.vaulthiveserver.domain.entities.ListGameEntity;
 import dev.septian.vaulthiveserver.services.ListService;
 
 @SpringBootTest
@@ -36,13 +39,6 @@ public class ListControllerIt {
     @Test
     public void testThatCreateListReturnsHttpStatus201Created() throws Exception {
         ListEntity listEntity = TestData.createListEntityA();
-        ListGameEntity item1 = TestData.createlistGameEntity(2345);
-        ListGameEntity item2 = TestData.createlistGameEntity(2346);
-        ListGameEntity item3 = TestData.createlistGameEntity(3345);
-
-        listEntity.add(item1);
-        listEntity.add(item2);
-        listEntity.add(item3);
 
         String listJson = objectMapper.writeValueAsString(listEntity);
 
@@ -55,29 +51,27 @@ public class ListControllerIt {
     @Test
     public void testThatCreateListReturnsCreatedList() throws Exception {
         ListEntity listEntity = TestData.createListEntityA();
-        ListGameEntity item1 = TestData.createlistGameEntity(2345);
-        ListGameEntity item2 = TestData.createlistGameEntity(2346);
-        ListGameEntity item3 = TestData.createlistGameEntity(3345);
+        Set<GameEntity> listGames = new HashSet<>();
+        listGames.add(TestData.createGameEntity(1));
+        listGames.add(TestData.createGameEntity(2));
+        listGames.add(TestData.createGameEntity(3));
 
-        listEntity.add(item1);
-        listEntity.add(item2);
-        listEntity.add(item3);
+        listEntity.setGames(listGames);
 
         String listJson = objectMapper.writeValueAsString(listEntity);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/lists/")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(listJson)).andExpect(
+                .content(listJson))
+                .andExpect(
                         MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.title").value("A pieceful day"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.listGames").isArray())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.listGames[0].id").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.listGames[0].gameId").value(2345))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.listGames[1].id").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.listGames[1].gameId").value(2346))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.listGames[2].id").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.listGames[2].gameId").value(3345));
+                .andExpect(
+                        MockMvcResultMatchers.jsonPath("$.id").exists())
+                .andExpect(
+                        MockMvcResultMatchers.jsonPath("$.title").value("A pieceful day"))
+                .andExpect(
+                        MockMvcResultMatchers.jsonPath("$.description").value("For those who want to relax"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.games").isArray());
     }
 
     @Test
@@ -97,13 +91,9 @@ public class ListControllerIt {
     @Test
     public void testThatGetListsReturnsList() throws Exception {
         ListEntity listEntity = TestData.createListEntityA();
-        ListGameEntity item1 = TestData.createlistGameEntity(2345);
-        ListGameEntity item2 = TestData.createlistGameEntity(2346);
-        ListGameEntity item3 = TestData.createlistGameEntity(3345);
-
-        listEntity.add(item1);
-        listEntity.add(item2);
-        listEntity.add(item3);
+        listEntity.getGames().add(TestData.createGameEntity(2));
+        listEntity.getGames().add(TestData.createGameEntity(3));
+        listEntity.getGames().add(TestData.createGameEntity(4));
 
         listService.save(listEntity);
 
@@ -112,19 +102,19 @@ public class ListControllerIt {
                 .andExpect(MockMvcResultMatchers.jsonPath("$").isArray())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].title").value("A pieceful day"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].listGames").isArray());
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].games").isArray());
     }
 
     @Test
     public void testThatUpdateListReturnsHttpStatus200Ok() throws Exception {
         ListEntity listEntity = TestData.createListEntityA();
-        ListGameEntity item1 = TestData.createlistGameEntity(2345);
-        ListGameEntity item2 = TestData.createlistGameEntity(2346);
-        ListGameEntity item3 = TestData.createlistGameEntity(3345);
+        // ListGameEntity item1 = TestData.createlistGameEntity(2345);
+        // ListGameEntity item2 = TestData.createlistGameEntity(2346);
+        // ListGameEntity item3 = TestData.createlistGameEntity(3345);
 
-        listEntity.add(item1);
-        listEntity.add(item2);
-        listEntity.add(item3);
+        // listEntity.add(item1);
+        // listEntity.add(item2);
+        // listEntity.add(item3);
 
         listService.save(listEntity);
 
@@ -141,13 +131,13 @@ public class ListControllerIt {
     @Test
     public void testThatUpdateListReturnsUpdatedList() throws Exception {
         ListEntity listEntity = TestData.createListEntityA();
-        ListGameEntity item1 = TestData.createlistGameEntity(2345);
-        ListGameEntity item2 = TestData.createlistGameEntity(2346);
-        ListGameEntity item3 = TestData.createlistGameEntity(3345);
+        // ListGameEntity item1 = TestData.createlistGameEntity(2345);
+        // ListGameEntity item2 = TestData.createlistGameEntity(2346);
+        // ListGameEntity item3 = TestData.createlistGameEntity(3345);
 
-        listEntity.add(item1);
-        listEntity.add(item2);
-        listEntity.add(item3);
+        // listEntity.add(item1);
+        // listEntity.add(item2);
+        // listEntity.add(item3);
 
         listService.save(listEntity);
 
@@ -173,13 +163,13 @@ public class ListControllerIt {
     @Test
     public void testThatIpdateListReturnsHttpStatus404NotFound() throws Exception {
         ListEntity listEntity = TestData.createListEntityA();
-        ListGameEntity item1 = TestData.createlistGameEntity(2345);
-        ListGameEntity item2 = TestData.createlistGameEntity(2346);
-        ListGameEntity item3 = TestData.createlistGameEntity(3345);
+        // ListGameEntity item1 = TestData.createlistGameEntity(2345);
+        // ListGameEntity item2 = TestData.createlistGameEntity(2346);
+        // ListGameEntity item3 = TestData.createlistGameEntity(3345);
 
-        listEntity.add(item1);
-        listEntity.add(item2);
-        listEntity.add(item3);
+        // listEntity.add(item1);
+        // listEntity.add(item2);
+        // listEntity.add(item3);
 
         listService.save(listEntity);
 
@@ -196,13 +186,13 @@ public class ListControllerIt {
     @Test
     public void testThatGetListReturnsHttpStatus200Ok() throws Exception {
         ListEntity listEntity = TestData.createListEntityA();
-        ListGameEntity item1 = TestData.createlistGameEntity(2345);
-        ListGameEntity item2 = TestData.createlistGameEntity(2346);
-        ListGameEntity item3 = TestData.createlistGameEntity(3345);
+        // ListGameEntity item1 = TestData.createlistGameEntity(2345);
+        // ListGameEntity item2 = TestData.createlistGameEntity(2346);
+        // ListGameEntity item3 = TestData.createlistGameEntity(3345);
 
-        listEntity.add(item1);
-        listEntity.add(item2);
-        listEntity.add(item3);
+        // listEntity.add(item1);
+        // listEntity.add(item2);
+        // listEntity.add(item3);
 
         listService.save(listEntity);
 
@@ -219,13 +209,13 @@ public class ListControllerIt {
     @Test
     public void testThatDeleteListReturnsHttpStatus204NoContent() throws Exception {
         ListEntity listEntity = TestData.createListEntityA();
-        ListGameEntity item1 = TestData.createlistGameEntity(2345);
-        ListGameEntity item2 = TestData.createlistGameEntity(2346);
-        ListGameEntity item3 = TestData.createlistGameEntity(3345);
+        // ListGameEntity item1 = TestData.createlistGameEntity(2345);
+        // ListGameEntity item2 = TestData.createlistGameEntity(2346);
+        // ListGameEntity item3 = TestData.createlistGameEntity(3345);
 
-        listEntity.add(item1);
-        listEntity.add(item2);
-        listEntity.add(item3);
+        // listEntity.add(item1);
+        // listEntity.add(item2);
+        // listEntity.add(item3);
 
         listService.save(listEntity);
 
@@ -242,13 +232,13 @@ public class ListControllerIt {
     @Test
     public void testThatDeleteListActuallyDeletes() throws Exception {
         ListEntity listEntity = TestData.createListEntityA();
-        ListGameEntity item1 = TestData.createlistGameEntity(2345);
-        ListGameEntity item2 = TestData.createlistGameEntity(2346);
-        ListGameEntity item3 = TestData.createlistGameEntity(3345);
+        // ListGameEntity item1 = TestData.createlistGameEntity(2345);
+        // ListGameEntity item2 = TestData.createlistGameEntity(2346);
+        // ListGameEntity item3 = TestData.createlistGameEntity(3345);
 
-        listEntity.add(item1);
-        listEntity.add(item2);
-        listEntity.add(item3);
+        // listEntity.add(item1);
+        // listEntity.add(item2);
+        // listEntity.add(item3);
 
         listService.save(listEntity);
 

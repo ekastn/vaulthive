@@ -3,11 +3,10 @@ package dev.septian.vaulthiveserver;
 import java.util.Set;
 import java.util.HashSet;
 
-import dev.septian.vaulthiveserver.domain.dtos.DeveloperDto;
-import dev.septian.vaulthiveserver.domain.dtos.PublisherDto;
+import dev.septian.vaulthiveserver.domain.entities.DeveloperEntity;
 import dev.septian.vaulthiveserver.domain.entities.GameEntity;
 import dev.septian.vaulthiveserver.domain.entities.ListEntity;
-import dev.septian.vaulthiveserver.domain.entities.ListGameEntity;
+import dev.septian.vaulthiveserver.domain.entities.PublisherEntity;
 
 public final class TestData {
     private TestData() {
@@ -27,27 +26,13 @@ public final class TestData {
                 .build();
     }
 
-    public static ListGameEntity createlistGameEntity(int id) {
-        return ListGameEntity.builder()
-                .id(id)
-                .build();
-    }
-
     public static GameEntity createGameEntity(int id) {
-        Set<DeveloperDto> developers = new HashSet<>();
-        developers.add(new DeveloperDto(1, "Developer 1", 1));
-        developers.add(new DeveloperDto(2, "Developer 2", 1));
-        Set<PublisherDto> publishers = new HashSet<>();
-        publishers.add(new PublisherDto(1, "Publisher 1", 1));
-        publishers.add(new PublisherDto(2, "Publisher 2", 1));
         return GameEntity.builder()
                 .id(id)
                 .name("Game " + id)
-                .description("Description of game " + id)
+                .description("Description of Game " + id)
                 .released("2021-01-01")
-                .rating(4.5f)
-                .developers(developers)
-                .publishers(publishers)
+                .rating(5.0f)
                 .build();
     }
 }
