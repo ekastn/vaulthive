@@ -107,4 +107,22 @@ public class GameSearchRepositoryIt {
         assertThat(foundGameSearch).isEmpty();
     }
 
+    @Test
+    public void testThatGameSearchCanBeFoundByName() {
+        GameSearchEntity gameSearchEntity = GameSearchEntity.builder()
+                .id(1)
+                .name("Game 1")
+                .slug("game-1")
+                .released("2021-01-01")
+                .imageUrl("https://example.com/image.jpg")
+                .build();
+
+        underTest.save(gameSearchEntity);
+
+        Optional<GameSearchEntity> foundGameSearch = underTest.findByNameContainingIgnoreCase("Game 1").stream().findFirst();
+
+        assertThat(foundGameSearch).isPresent();
+        assertThat(foundGameSearch.get().getName()).isEqualTo("Game 1");
+    }
+
 }

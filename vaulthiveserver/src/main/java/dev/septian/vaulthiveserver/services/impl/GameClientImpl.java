@@ -11,6 +11,7 @@ import org.springframework.web.client.RestClient;
 
 import dev.septian.vaulthiveserver.domain.RawgPagedResponse;
 import dev.septian.vaulthiveserver.domain.dtos.GameDto;
+import dev.septian.vaulthiveserver.domain.dtos.GameSearchDto;
 import dev.septian.vaulthiveserver.services.GameClient;
 
 @Service
@@ -22,6 +23,7 @@ public class GameClientImpl implements GameClient {
     private String apiKey;
 
     private String endpoint = "/games";
+    private int pageSize = 10;
 
     public GameClientImpl(RestClient restClient) {
         this.restClient = restClient;
@@ -39,14 +41,15 @@ public class GameClientImpl implements GameClient {
     }
 
     @Override
-    public RawgPagedResponse<GameDto> getData(Map<String, String> params) {
+    public RawgPagedResponse<GameSearchDto> getData(Map<String, String> params) {
         return restClient.get()
                 .uri(uriBuilder -> uriBuilder.path(endpoint)
                         .queryParam("key", apiKey)
+                        .queryParam("page_size", pageSize)
                         .queryParams(toMultiValueMap(params))
                         .build())
                 .retrieve()
-                .body(new ParameterizedTypeReference<RawgPagedResponse<GameDto>>() {
+                .body(new ParameterizedTypeReference<RawgPagedResponse<GameSearchDto>>() {
                 });
     }
 

@@ -1,6 +1,7 @@
 package dev.septian.vaulthiveserver.controllers;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
@@ -18,6 +19,7 @@ public class GameControllerIt {
     private MockMvc mockMvc;
     private GameService gameService;
 
+    @Autowired
     public GameControllerIt(MockMvc mockMvc, GameService gameService) {
         this.mockMvc = mockMvc;
         this.gameService = gameService;
@@ -27,6 +29,19 @@ public class GameControllerIt {
     public void testThatGameDetailsReturnHttpStatus200Ok() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/games/3498"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void testThatSearchGameWithParamsReturnHttpStatus200Ok() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/games?search=batman"))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void testThatSearchGameReturnSearchGameDto() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/games?search=batman"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$").isArray());
     }
     
 }
