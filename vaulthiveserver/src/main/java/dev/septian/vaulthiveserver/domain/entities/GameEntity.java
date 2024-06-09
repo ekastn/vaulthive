@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
@@ -29,6 +30,7 @@ public class GameEntity {
 
     private String name;
 
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     private String released;
