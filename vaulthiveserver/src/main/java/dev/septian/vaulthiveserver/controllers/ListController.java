@@ -2,7 +2,7 @@ package dev.septian.vaulthiveserver.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import dev.septian.vaulthiveserver.domain.ListEntity;
+import dev.septian.vaulthiveserver.domain.entities.ListEntity;
 import dev.septian.vaulthiveserver.services.ListService;
 
 import org.springframework.web.bind.annotation.RequestMapping;

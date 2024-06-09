@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import dev.septian.vaulthiveserver.domain.Game;
 import dev.septian.vaulthiveserver.domain.RawgPagedResponse;
+import dev.septian.vaulthiveserver.domain.dtos.GameDto;
 import dev.septian.vaulthiveserver.services.GameService;
 
 @RestController
@@ -22,13 +22,13 @@ public class GameController {
     }
 
     @GetMapping("/search/{name}")
-    public ResponseEntity<RawgPagedResponse<Game>> searchGameByName(@PathVariable String name) {
-        RawgPagedResponse<Game> result = gameService.searchGameByName(name);
+    public ResponseEntity<RawgPagedResponse<GameDto>> searchGameByName(@PathVariable String name) {
+        RawgPagedResponse<GameDto> result = gameService.searchGameByName(name);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Game> getGameDetails(@PathVariable long id) {
+    public ResponseEntity<GameDto> getGameDetails(@PathVariable long id) {
         return new ResponseEntity<>(gameService.getGameDetails(id), HttpStatus.OK);
     }
 

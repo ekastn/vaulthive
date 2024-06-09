@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import dev.septian.vaulthiveserver.domain.ListEntity;
+import dev.septian.vaulthiveserver.domain.entities.ListEntity;
 import dev.septian.vaulthiveserver.repositories.ListRepository;
 import dev.septian.vaulthiveserver.services.ListService;
 

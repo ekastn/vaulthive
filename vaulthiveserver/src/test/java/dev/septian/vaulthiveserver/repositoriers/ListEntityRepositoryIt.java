@@ -6,8 +6,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
 import dev.septian.vaulthiveserver.TestData;
-import dev.septian.vaulthiveserver.domain.ListEntity;
-import dev.septian.vaulthiveserver.domain.ListGameEntity;
+import dev.septian.vaulthiveserver.domain.entities.ListEntity;
+import dev.septian.vaulthiveserver.domain.entities.ListGameEntity;
 import dev.septian.vaulthiveserver.repositories.ListRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;

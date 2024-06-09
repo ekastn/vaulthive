@@ -9,8 +9,8 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient;
 
-import dev.septian.vaulthiveserver.domain.Game;
 import dev.septian.vaulthiveserver.domain.RawgPagedResponse;
+import dev.septian.vaulthiveserver.domain.dtos.GameDto;
 import dev.septian.vaulthiveserver.services.GameClient;
 
 @Service
@@ -26,36 +26,36 @@ public class GameClientImpl implements GameClient {
     }
 
     @Override
-    public RawgPagedResponse<Game> getData(String endpoint) {
+    public RawgPagedResponse<GameDto> getData(String endpoint) {
         return restClient.get()
                 .uri(uriBuilder -> uriBuilder.path(endpoint)
                         .queryParam("key", apiKey)
                         .build())
                 .retrieve()
-                .body(new ParameterizedTypeReference<RawgPagedResponse<Game>>() {
+                .body(new ParameterizedTypeReference<RawgPagedResponse<GameDto>>() {
                 });
     }
 
     @Override
-    public RawgPagedResponse<Game> getData(String endpoint, Map<String, String> params) {
+    public RawgPagedResponse<GameDto> getData(String endpoint, Map<String, String> params) {
         return restClient.get()
                 .uri(uriBuilder -> uriBuilder.path(endpoint)
                         .queryParam("key", apiKey)
                         .queryParams(toMultiValueMap(params))
                         .build())
                 .retrieve()
-                .body(new ParameterizedTypeReference<RawgPagedResponse<Game>>() {
+                .body(new ParameterizedTypeReference<RawgPagedResponse<GameDto>>() {
                 });
     }
 
     @Override
-    public Game getDetails(String endpoint, long id) {
+    public GameDto getDetails(String endpoint, long id) {
         return restClient.get()
                 .uri(uriBuilder -> uriBuilder.path(endpoint + "/" + id)
                         .queryParam("key", apiKey)
                         .build())
                 .retrieve()
-                .body(Game.class);
+                .body(GameDto.class);
     }
 
     private MultiValueMap<String, String> toMultiValueMap(Map<String, String> params) {

@@ -3,7 +3,7 @@ package dev.septian.vaulthiveserver.services;
 import java.util.List;
 import java.util.Optional;
 
-import dev.septian.vaulthiveserver.domain.ListEntity;
+import dev.septian.vaulthiveserver.domain.entities.ListEntity;
 
 public interface ListService {
     Optional<ListEntity> findOne(int id);

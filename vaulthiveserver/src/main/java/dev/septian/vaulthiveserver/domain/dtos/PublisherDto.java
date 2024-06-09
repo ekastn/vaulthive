@@ -1,19 +1,22 @@
-package dev.septian.vaulthiveserver.domain;
+package dev.septian.vaulthiveserver.domain.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Game {
+public class PublisherDto {
+
     private int id;
+
     private String name;
-    private String description;
-    private String released;
-    private float rating;
+
+    private int gameCount;
 }

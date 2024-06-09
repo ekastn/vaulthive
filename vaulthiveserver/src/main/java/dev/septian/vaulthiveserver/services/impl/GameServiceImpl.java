@@ -4,8 +4,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import dev.septian.vaulthiveserver.domain.Game;
 import dev.septian.vaulthiveserver.domain.RawgPagedResponse;
+import dev.septian.vaulthiveserver.domain.dtos.GameDto;
 import dev.septian.vaulthiveserver.services.GameService;
 import dev.septian.vaulthiveserver.services.GameClient;
 
@@ -19,17 +19,17 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public Game getGameDetails(long id) {
+    public GameDto getGameDetails(long id) {
         return rawgClient.getDetails("/games", id);
     }
 
     @Override
-    public RawgPagedResponse<Game> searchGame(Map<String, String> params) {
+    public RawgPagedResponse<GameDto> searchGame(Map<String, String> params) {
         return rawgClient.getData("/games", params);
     }
 
     @Override
-    public RawgPagedResponse<Game> searchGameByName(String name) {
+    public RawgPagedResponse<GameDto> searchGameByName(String name) {
         return rawgClient.getData("/games", Map.of("search", name));
     }
 }

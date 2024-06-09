@@ -1,6 +1,5 @@
-package dev.septian.vaulthiveserver.domain;
+package dev.septian.vaulthiveserver.domain.entities;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,7 +20,4 @@ public class ListGameEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    @Column(name = "game_id")
-    private int gameId;
 }

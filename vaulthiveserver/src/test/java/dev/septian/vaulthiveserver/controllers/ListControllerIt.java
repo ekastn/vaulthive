@@ -13,8 +13,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dev.septian.vaulthiveserver.TestData;
-import dev.septian.vaulthiveserver.domain.ListEntity;
-import dev.septian.vaulthiveserver.domain.ListGameEntity;
+import dev.septian.vaulthiveserver.domain.entities.ListEntity;
+import dev.septian.vaulthiveserver.domain.entities.ListGameEntity;
 import dev.septian.vaulthiveserver.services.ListService;
 
 @SpringBootTest
