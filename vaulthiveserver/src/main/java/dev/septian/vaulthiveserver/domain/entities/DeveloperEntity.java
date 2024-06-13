@@ -36,7 +36,7 @@ public class DeveloperEntity {
     @Builder.Default
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
-        name = "game_developer",
+        name = "game_developers",
         joinColumns = @JoinColumn(name = "developer_id"),
         inverseJoinColumns = @JoinColumn(name = "game_id")
     )

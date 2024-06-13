@@ -25,7 +25,7 @@ public class GameSearchDto {
     private String released;
 
     @JsonAlias("background_image")
-    @JsonProperty("image_url")
+    @JsonProperty("imageUrl")
     private String imageUrl;
 
 }

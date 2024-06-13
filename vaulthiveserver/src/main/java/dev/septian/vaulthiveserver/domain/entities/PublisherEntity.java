@@ -34,7 +34,7 @@ public class PublisherEntity {
     @Builder.Default
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
-        name = "game_publisher",
+        name = "game_publishers",
         joinColumns = @JoinColumn(name = "publisher_id"),
         inverseJoinColumns = @JoinColumn(name = "game_id")
     )
