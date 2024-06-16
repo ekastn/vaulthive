@@ -30,6 +30,8 @@ public class GameEntity {
 
     private String name;
 
+    private String slug;
+
     @Column(columnDefinition = "TEXT")
     private String description;
 

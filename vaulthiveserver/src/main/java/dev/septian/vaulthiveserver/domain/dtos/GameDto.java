@@ -21,6 +21,8 @@ public class GameDto {
 
     private String name;
 
+    private String slug;
+
     @JsonAlias("description_raw")
     @JsonProperty("description")
     private String description;

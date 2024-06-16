@@ -3,6 +3,7 @@ package dev.septian.vaulthiveserver.services.impl;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -67,13 +68,17 @@ public class GameServiceImpl implements GameService {
                 return List.of();
             }
 
+            Set<Integer> existingGames = gameSearchRepository.findAll().stream()
+                .map(GameSearchEntity::getId)
+                .collect(Collectors.toSet());
+
             List<GameSearchDto> newGames = response.getResults();
             for (GameSearchDto newGame : newGames) {
-                GameSearchEntity game = gameSearchMapper.mapFrom(newGame);
-
-                if (gameSearchRepository.findById(game.getId()).isPresent()) {
+                if (existingGames.contains(newGame.getId())) {
                     continue;
                 }
+
+                GameSearchEntity game = gameSearchMapper.mapFrom(newGame);
 
                 gameSearchRepository.save(game);
             }

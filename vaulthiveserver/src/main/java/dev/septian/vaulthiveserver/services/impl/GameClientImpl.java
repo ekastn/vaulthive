@@ -23,7 +23,7 @@ public class GameClientImpl implements GameClient {
     private String apiKey;
 
     private String endpoint = "/games";
-    private int pageSize = 10;
+    private int pageSize = 20;
 
     public GameClientImpl(RestClient restClient) {
         this.restClient = restClient;
