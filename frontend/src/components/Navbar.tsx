@@ -13,7 +13,7 @@ const Navbar = () => {
                         <Link
                             key={item.id}
                             to={item.path}
-                            className="text-base font-medium uppercase transition-colors duration-200 text-primary hover:text-txMain"
+                            className="text-base font-medium uppercase transition-colors duration-200 hover:text-white"
                         >
                             {item.title}
                         </Link>
