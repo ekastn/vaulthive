@@ -7,6 +7,7 @@ import dev.septian.vaulthiveserver.domain.entities.DeveloperEntity;
 import dev.septian.vaulthiveserver.domain.entities.GameEntity;
 import dev.septian.vaulthiveserver.domain.entities.ListEntity;
 import dev.septian.vaulthiveserver.domain.entities.PublisherEntity;
+import dev.septian.vaulthiveserver.domain.entities.UserEntity;
 
 public final class TestData {
     private TestData() {
@@ -33,6 +34,14 @@ public final class TestData {
                 .description("Description of Game " + id)
                 .released("2021-01-01")
                 .rating(5.0f)
+                .build();
+    }
+
+    public static UserEntity createUserEntity(String string) {
+        return UserEntity.builder()
+                .username(string)
+                .email(string + "@example.com")
+                .password("password")
                 .build();
     }
 }

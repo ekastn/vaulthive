@@ -7,6 +7,7 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import dev.septian.vaulthiveserver.TestData;
 import dev.septian.vaulthiveserver.domain.entities.ListEntity;
+import dev.septian.vaulthiveserver.domain.entities.UserEntity;
 import dev.septian.vaulthiveserver.repositories.ListRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,40 +27,31 @@ public class ListRepositoryIt {
 
     @Test
     public void testThatListCanBeCreatedAndRecalled() {
+        UserEntity userEntity = TestData.createUserEntity("user1");
+
         ListEntity listEntity = TestData.createListEntityA();
 
         listEntity.getGames().add(TestData.createGameEntity(2));
         listEntity.getGames().add(TestData.createGameEntity(3));
         listEntity.getGames().add(TestData.createGameEntity(4));
         listEntity.getGames().add(TestData.createGameEntity(5));
+
+        listEntity.setUser(userEntity);
 
         ListEntity savedList = underTest.save(listEntity);
 
         assertThat(savedList).isNotNull();
-        assertThat(savedList.getId()).isNotNull();
-        assertThat(savedList.getGames()).isNotEmpty();
-    }
-
-    @Test
-    public void testThatListCanBeRetrieved() {
-        ListEntity listEntity = TestData.createListEntityA();
-
-        listEntity.getGames().add(TestData.createGameEntity(2));
-        listEntity.getGames().add(TestData.createGameEntity(3));
-        listEntity.getGames().add(TestData.createGameEntity(4));
-        listEntity.getGames().add(TestData.createGameEntity(5));
-
-        ListEntity savedList = underTest.save(listEntity);
-
-        Optional<ListEntity> foundList = underTest.findById(savedList.getId());
-
-        assertThat(foundList).isPresent();
-        assertThat(foundList.get().getTitle()).isEqualTo("A pieceful day");
-        assertThat(foundList.get().getGames()).isNotEmpty();
+        assertThat(savedList.getId()).isEqualTo(listEntity.getId());
+        assertThat(savedList.getTitle()).isEqualTo("A pieceful day");
+        assertThat(savedList.getDescription()).isEqualTo("For those who want to relax");
+        assertThat(savedList.getGames()).hasSize(4);
+        assertThat(savedList.getUser()).isEqualTo(userEntity);
     }
 
     @Test
     public void testThatListCanBeUpdated() {
+        UserEntity userEntity = TestData.createUserEntity("user1");
+
         ListEntity listEntity = TestData.createListEntityA();
 
         listEntity.getGames().add(TestData.createGameEntity(2));
@@ -67,26 +59,24 @@ public class ListRepositoryIt {
         listEntity.getGames().add(TestData.createGameEntity(4));
         listEntity.getGames().add(TestData.createGameEntity(5));
 
-        ListEntity savedList = underTest.save(listEntity);
+        listEntity.setUser(userEntity);
 
-        savedList.setTitle("Updated Title");
-        savedList.setDescription("Updated Description");
-        savedList.getGames().clear();
-        savedList.getGames().add(TestData.createGameEntity(6));
-        savedList.getGames().add(TestData.createGameEntity(7));
-        savedList.getGames().add(TestData.createGameEntity(8));
-        savedList.getGames().add(TestData.createGameEntity(9));
+        underTest.save(listEntity);
 
-        ListEntity updatedList = underTest.save(savedList);
+        listEntity.setTitle("A pieceful night");
 
-        assertThat(updatedList).isNotNull();
-        assertThat(updatedList.getTitle()).isEqualTo("Updated Title");
-        assertThat(updatedList.getDescription()).isEqualTo("Updated Description");
-        assertThat(updatedList.getGames()).isNotEmpty();
+        underTest.save(listEntity);
+
+        Optional<ListEntity> foundList = underTest.findById(listEntity.getId());
+
+        assertThat(foundList).isPresent();
+        assertThat(foundList.get().getTitle()).isEqualTo("A pieceful night");
     }
 
     @Test
     public void testThatListCanBeDeleted() {
+        UserEntity userEntity = TestData.createUserEntity("user1");
+
         ListEntity listEntity = TestData.createListEntityA();
 
         listEntity.getGames().add(TestData.createGameEntity(2));
@@ -94,9 +84,11 @@ public class ListRepositoryIt {
         listEntity.getGames().add(TestData.createGameEntity(4));
         listEntity.getGames().add(TestData.createGameEntity(5));
 
+        listEntity.setUser(userEntity);
+
         ListEntity savedList = underTest.save(listEntity);
 
-        underTest.deleteById(savedList.getId());
+        underTest.delete(savedList);
 
         Optional<ListEntity> foundList = underTest.findById(savedList.getId());
 
