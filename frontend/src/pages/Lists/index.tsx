@@ -1,5 +1,6 @@
 import { CgProfile } from "react-icons/cg";
 import { FaHeart } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Lists = () => {
     return (
@@ -8,7 +9,7 @@ const Lists = () => {
                 <h1 className="text-xl uppercase font-extralight">
                     Collect, curate, and share. Lists are the perfect way to group games.
                 </h1>
-                <button className="px-4 py-2 text-sm font-light bg-gray-800">Start your own list</button>
+                <Link to="/lists/new" className="px-4 py-2 text-sm font-light bg-gray-800">Start your own list</Link>
             </div>
             <div className="grid grid-cols-[auto_max(20vw,300px)] gap-32 mt-12">
                 <div className="rounded-lg">

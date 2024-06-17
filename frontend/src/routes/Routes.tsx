@@ -6,6 +6,7 @@ import Register from "../pages/Register";
 import Games from "../pages/Games";
 import Lists from "../pages/Lists";
 import Game from "../pages/Game";
+import NewList from "../pages/NewList";
 
 export const router = createBrowserRouter([
     {
@@ -18,6 +19,7 @@ export const router = createBrowserRouter([
             { path: "games", element: <Games /> },
             { path: "games/:slug", element: <Game /> },
             { path: "lists", element: <Lists /> },
+            { path: "lists/new", element: <NewList /> },
         ],
     },
 ]);
