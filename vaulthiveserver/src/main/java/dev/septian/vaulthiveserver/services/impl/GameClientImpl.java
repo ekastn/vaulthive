@@ -9,9 +9,9 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient;
 
-import dev.septian.vaulthiveserver.domain.RawgPagedResponse;
 import dev.septian.vaulthiveserver.domain.dtos.GameDto;
 import dev.septian.vaulthiveserver.domain.dtos.GameSearchDto;
+import dev.septian.vaulthiveserver.domain.responses.RawgPagedResponse;
 import dev.septian.vaulthiveserver.services.GameClient;
 
 @Service

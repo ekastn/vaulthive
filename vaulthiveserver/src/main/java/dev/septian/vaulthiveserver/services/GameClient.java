@@ -2,9 +2,9 @@ package dev.septian.vaulthiveserver.services;
 
 import java.util.Map;
 
-import dev.septian.vaulthiveserver.domain.RawgPagedResponse;
 import dev.septian.vaulthiveserver.domain.dtos.GameDto;
 import dev.septian.vaulthiveserver.domain.dtos.GameSearchDto;
+import dev.septian.vaulthiveserver.domain.responses.RawgPagedResponse;
 
 public interface GameClient {
     RawgPagedResponse<GameDto> getData();

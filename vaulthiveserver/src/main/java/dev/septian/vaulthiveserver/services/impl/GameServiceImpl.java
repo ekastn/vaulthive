@@ -8,11 +8,11 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import dev.septian.vaulthiveserver.domain.RawgPagedResponse;
 import dev.septian.vaulthiveserver.domain.dtos.GameDto;
 import dev.septian.vaulthiveserver.domain.dtos.GameSearchDto;
 import dev.septian.vaulthiveserver.domain.entities.GameEntity;
 import dev.septian.vaulthiveserver.domain.entities.GameSearchEntity;
+import dev.septian.vaulthiveserver.domain.responses.RawgPagedResponse;
 import dev.septian.vaulthiveserver.repositories.GameRepository;
 import dev.septian.vaulthiveserver.repositories.GameSearchRepository;
 import dev.septian.vaulthiveserver.services.GameService;

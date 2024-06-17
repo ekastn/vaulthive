@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import dev.septian.vaulthiveserver.domain.RawgPagedResponse;
 import dev.septian.vaulthiveserver.domain.dtos.GameDto;
+import dev.septian.vaulthiveserver.domain.responses.RawgPagedResponse;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

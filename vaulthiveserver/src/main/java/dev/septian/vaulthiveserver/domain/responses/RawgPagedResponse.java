@@ -1,4 +1,4 @@
-package dev.septian.vaulthiveserver.domain;
+package dev.septian.vaulthiveserver.domain.responses;
 
 import java.util.List;
 
