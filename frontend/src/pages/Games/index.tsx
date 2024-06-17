@@ -5,7 +5,7 @@ const Games = () => {
     const navigate = useNavigate();
 
     const handeClick = (game: GameSearch) => {
-        navigate(`/games/${game.slug}`, { state: game });
+        navigate(`/games/${game.slug}`, { state: { game } });
     };
 
     return (

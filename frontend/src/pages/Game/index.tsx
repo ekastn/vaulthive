@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom";
 
 const Game = () => {
     const { state } = useLocation();
-    const game = state as GameSearch;
+    const game = state.game as GameSearch;
 
     return (
         <main className="px-24 py-4 flex flex-col gap-4 h-[calc(100vh-150px)]">
