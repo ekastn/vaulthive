@@ -18,6 +18,6 @@ public class PublisherDto {
 
     private String name;
 
-    private int gameCount;
+    private String slug;
 
 }

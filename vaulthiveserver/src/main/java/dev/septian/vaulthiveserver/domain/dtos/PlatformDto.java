@@ -12,9 +12,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class DeveloperDto {
-
-    private int id;
+public class PlatformDto {
+    
+    private Integer id;
 
     private String name;
 
