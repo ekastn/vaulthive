@@ -28,7 +28,6 @@ public class DeveloperRepositoryIt {
         DeveloperEntity developerEntity = DeveloperEntity.builder()
                 .id(1)
                 .name("developer 1")
-                .gameCount(12)
                 .build();
 
         DeveloperEntity savedDeveloper = underTest.save(developerEntity);
@@ -43,7 +42,6 @@ public class DeveloperRepositoryIt {
         DeveloperEntity developerEntity = DeveloperEntity.builder()
                 .id(1)
                 .name("developer 1")
-                .gameCount(12)
                 .build();
 
         DeveloperEntity savedDeveloper = underTest.save(developerEntity);
@@ -52,7 +50,6 @@ public class DeveloperRepositoryIt {
 
         assertThat(foundDeveloper).isPresent();
         assertThat(foundDeveloper.get().getName()).isEqualTo("developer 1");
-        assertThat(foundDeveloper.get().getGameCount()).isEqualTo(12);
     }
 
     @Test
@@ -60,7 +57,6 @@ public class DeveloperRepositoryIt {
         DeveloperEntity developerEntity = DeveloperEntity.builder()
                 .id(1)
                 .name("developer 1")
-                .gameCount(12)
                 .build();
 
         DeveloperEntity savedDeveloper = underTest.save(developerEntity);
@@ -68,7 +64,6 @@ public class DeveloperRepositoryIt {
         DeveloperEntity updatedDeveloper = DeveloperEntity.builder()
                 .id(savedDeveloper.getId())
                 .name("developer 1 Updated")
-                .gameCount(15)
                 .build();
 
         DeveloperEntity updatedSavedDeveloper = underTest.save(updatedDeveloper);
@@ -76,7 +71,6 @@ public class DeveloperRepositoryIt {
         assertThat(updatedSavedDeveloper).isNotNull();
         assertThat(updatedSavedDeveloper.getId()).isEqualTo(savedDeveloper.getId());
         assertThat(updatedSavedDeveloper.getName()).isEqualTo("developer 1 Updated");
-        assertThat(updatedSavedDeveloper.getGameCount()).isEqualTo(15);
     }
 
     @Test
@@ -84,7 +78,6 @@ public class DeveloperRepositoryIt {
         DeveloperEntity developerEntity = DeveloperEntity.builder()
                 .id(1)
                 .name("developer 1")
-                .gameCount(12)
                 .build();
 
         DeveloperEntity savedDeveloper = underTest.save(developerEntity);
