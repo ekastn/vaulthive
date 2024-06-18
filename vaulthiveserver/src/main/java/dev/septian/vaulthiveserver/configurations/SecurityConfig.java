@@ -35,7 +35,7 @@ public class SecurityConfig {
                 .disable())
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers(HttpMethod.GET, "/api/games/**")
+                        .requestMatchers("/api/games/**")
                         .permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/lists/**")
                         .permitAll()
