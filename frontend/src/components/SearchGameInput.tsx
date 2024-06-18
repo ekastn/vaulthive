@@ -10,6 +10,11 @@ const SearchGameInput = ({ handleClick }: { handleClick: (game: GameSearch) => v
         setsearch(e.target.value);
     };
 
+    const handleSearchClick = (game: GameSearch) => {
+        handleClick(game);
+        setsearch("");
+    }
+
     const { data, isLoading } = useQuery({
         enabled: search.length > 3,
         queryKey: ["games", { search }],
@@ -25,7 +30,7 @@ const SearchGameInput = ({ handleClick }: { handleClick: (game: GameSearch) => v
                     {data?.map((game: GameSearch) => (
                         <li className="flex gap-2 p-2" key={game.id}>
                             <img className="w-[50px] object-cover" src={game.imageUrl} alt={game.name} />
-                            <div onClick={() => handleClick(game)}>
+                            <div onClick={() => handleSearchClick(game)}>
                                 <div className="text-sm font-medium cursor-pointer">{game.name}</div>
                                 <div className="text-xs">{new Date(game.released).getFullYear()}</div>
                             </div>
