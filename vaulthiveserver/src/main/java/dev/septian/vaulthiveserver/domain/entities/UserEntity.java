@@ -8,8 +8,10 @@ import java.util.Set;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -40,12 +42,18 @@ public class UserEntity implements UserDetails {
     private String password;
 
     @Builder.Default
-    @OneToMany(mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
     Set<ListEntity> lists = new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();
     }
-    
+
+    public void addList(ListEntity list) {
+        if (lists == null) {
+            lists = new HashSet<>();
+        }
+        lists.add(list);
+    }
 }

@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.septian.vaulthiveserver.domain.dtos.ListDto;
 import dev.septian.vaulthiveserver.domain.entities.ListEntity;
+import dev.septian.vaulthiveserver.domain.entities.UserEntity;
 import dev.septian.vaulthiveserver.domain.requests.ListRequest;
 import dev.septian.vaulthiveserver.mappers.Mapper;
 import dev.septian.vaulthiveserver.services.GameService;
@@ -19,6 +20,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -44,19 +47,29 @@ public class ListController {
 
     @PostMapping("/")
     public ResponseEntity<ListDto> createList(@RequestBody ListRequest listRequest) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        UserEntity userEntity = (UserEntity) auth.getPrincipal();        
+
         ListEntity listEntity = ListEntity.builder()
                 .title(listRequest.getTitle())
                 .description(listRequest.getDescription())
                 .build();
 
+        listEntity.setUser(userEntity);
         listEntity.setGames(listRequest.getGameIds().stream()
                 .map(gameId -> gameService.findOne(gameId).orElse(null))
                 .filter(game -> game != null)
                 .collect(Collectors.toSet()));
 
-        ListEntity saved = listService.save(listEntity);
-
-        return new ResponseEntity<>(listMapper.mapTo(saved), HttpStatus.CREATED);
+        try {
+            ListEntity createdList = listService.save(listEntity);
+            logger.info("List created: {}", createdList);
+            return new ResponseEntity<>(listMapper.mapTo(createdList), HttpStatus.CREATED);
+        } catch (Exception e) {
+            logger.error("Error creating list: {}", e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/")
