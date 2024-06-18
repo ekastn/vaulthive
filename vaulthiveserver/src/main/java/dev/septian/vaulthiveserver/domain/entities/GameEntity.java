@@ -32,7 +32,7 @@ public class GameEntity {
 
     private String slug;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "LONGTEXT")
     private String description;
 
     private String released;

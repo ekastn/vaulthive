@@ -52,4 +52,11 @@ public class ListEntity {
     )
     private Set<GameEntity> games = new HashSet<>();
 
+    public void addGame(GameEntity game) {
+        if (games == null) {
+            games = new HashSet<>();
+        }
+        games.add(game);
+    }
+
 }

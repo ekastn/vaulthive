@@ -13,10 +13,12 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -39,5 +41,12 @@ public class PublisherEntity {
         inverseJoinColumns = @JoinColumn(name = "game_id")
     )
     private Set<GameEntity> games = new HashSet<>();
+
+    public void addGame(GameEntity game) {
+        if (games == null) {
+            games = new HashSet<>();
+        }
+        games.add(game);
+    }
 
 }
