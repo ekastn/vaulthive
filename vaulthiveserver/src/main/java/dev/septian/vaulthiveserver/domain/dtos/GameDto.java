@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class GameDto {
+
     private int id;
 
     private String name;
@@ -34,6 +35,5 @@ public class GameDto {
     private Set<DeveloperDto> developers;
 
     private Set<PublisherDto> publishers;
-
-    private Set<ListDto> lists;
+    
 }
