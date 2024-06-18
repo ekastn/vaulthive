@@ -39,6 +39,7 @@ export const AuthProvider = ({ children }: Props) => {
                 if (res) {
                     localStorage.setItem("token", res?.data.token);
                     const userObj = {
+                        id: res?.data.id,
                         username: res?.data.username,
                         email: res?.data.email,
                     };
@@ -57,6 +58,7 @@ export const AuthProvider = ({ children }: Props) => {
                 if (res) {
                     localStorage.setItem("token", res?.data.token);
                     const userObj = {
+                        id: res?.data.id,
                         username: res?.data.username,
                         email: res?.data.email,
                     };
