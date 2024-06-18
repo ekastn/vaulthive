@@ -18,6 +18,7 @@ import dev.septian.vaulthiveserver.domain.entities.GameSearchEntity;
 import dev.septian.vaulthiveserver.domain.entities.GenreEntity;
 import dev.septian.vaulthiveserver.domain.entities.PlatformEntity;
 import dev.septian.vaulthiveserver.domain.entities.PublisherEntity;
+import dev.septian.vaulthiveserver.domain.entities.ScreenshotEntity;
 import dev.septian.vaulthiveserver.domain.responses.RawgPagedResponse;
 import dev.septian.vaulthiveserver.repositories.GameRepository;
 import dev.septian.vaulthiveserver.repositories.GameSearchRepository;
@@ -66,16 +67,19 @@ public class GameServiceImpl implements GameService {
             Set<PublisherEntity> publishers = gameEntity.getPublishers();
             Set<GenreEntity> genres = gameEntity.getGenres();
             Set<PlatformEntity> platforms = gameEntity.getPlatforms();
+            Set<ScreenshotEntity> screenshots = gameEntity.getScreenshots();
 
             developers.forEach(developer -> developer.addGame(gameEntity));
             publishers.forEach(publisher -> publisher.addGame(gameEntity));
             genres.forEach(genre -> genre.addGame(gameEntity));
             platforms.forEach(platform -> platform.addGame(gameEntity));
+            screenshots.forEach(screenshot -> screenshot.setGame(gameEntity));
 
             gameEntity.setDevelopers(developers);
             gameEntity.setPublishers(publishers);
             gameEntity.setGenres(genres);
             gameEntity.setPlatforms(platforms);
+            gameEntity.setScreenshots(screenshots);
 
             GameEntity saved = gameRepository.save(gameEntity);
 

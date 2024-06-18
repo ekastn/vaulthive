@@ -28,6 +28,8 @@ public class GameDto {
 
     private float rating;
 
+    private String imageUrl;
+
     private Set<DeveloperDto> developers;
 
     private Set<PublisherDto> publishers;
@@ -35,5 +37,7 @@ public class GameDto {
     private Set<GenreDto> genres;
 
     private Set<PlatformDto> platforms;
+
+    private Set<ScreenshotDto> screenshots;
 
 }

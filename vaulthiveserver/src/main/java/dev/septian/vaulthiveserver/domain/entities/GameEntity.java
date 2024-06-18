@@ -9,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,6 +40,9 @@ public class GameEntity {
 
     private float rating;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @Builder.Default
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER, mappedBy = "games")
     private Set<DeveloperEntity> developers = new HashSet<>();
@@ -58,4 +62,8 @@ public class GameEntity {
     @Builder.Default
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER, mappedBy = "games")
     private Set<ListEntity> lists = new HashSet<>();
+
+    @Builder.Default
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "game")
+    private Set<ScreenshotEntity> screenshots = new HashSet<>();
 }
