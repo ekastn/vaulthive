@@ -15,6 +15,8 @@ import dev.septian.vaulthiveserver.domain.dtos.GameSearchDto;
 import dev.septian.vaulthiveserver.domain.entities.DeveloperEntity;
 import dev.septian.vaulthiveserver.domain.entities.GameEntity;
 import dev.septian.vaulthiveserver.domain.entities.GameSearchEntity;
+import dev.septian.vaulthiveserver.domain.entities.GenreEntity;
+import dev.septian.vaulthiveserver.domain.entities.PlatformEntity;
 import dev.septian.vaulthiveserver.domain.entities.PublisherEntity;
 import dev.septian.vaulthiveserver.domain.responses.RawgPagedResponse;
 import dev.septian.vaulthiveserver.repositories.GameRepository;
@@ -56,15 +58,24 @@ public class GameServiceImpl implements GameService {
             if (game == null) {
                 return Optional.empty();
             }
+            
+            logger.info("Game: {}", game.toString());
 
             GameEntity gameEntity = gameMapper.mapFrom(game);
             Set<DeveloperEntity> developers = gameEntity.getDevelopers();
             Set<PublisherEntity> publishers = gameEntity.getPublishers();
+            Set<GenreEntity> genres = gameEntity.getGenres();
+            Set<PlatformEntity> platforms = gameEntity.getPlatforms();
 
             developers.forEach(developer -> developer.addGame(gameEntity));
             publishers.forEach(publisher -> publisher.addGame(gameEntity));
+            genres.forEach(genre -> genre.addGame(gameEntity));
+            platforms.forEach(platform -> platform.addGame(gameEntity));
+
             gameEntity.setDevelopers(developers);
             gameEntity.setPublishers(publishers);
+            gameEntity.setGenres(genres);
+            gameEntity.setPlatforms(platforms);
 
             GameEntity saved = gameRepository.save(gameEntity);
 

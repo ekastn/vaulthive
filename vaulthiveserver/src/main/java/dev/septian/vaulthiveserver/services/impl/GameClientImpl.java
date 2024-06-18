@@ -11,6 +11,7 @@ import org.springframework.web.client.RestClient;
 
 import dev.septian.vaulthiveserver.domain.dtos.GameDto;
 import dev.septian.vaulthiveserver.domain.dtos.GameSearchDto;
+import dev.septian.vaulthiveserver.domain.responses.RawgGameRespnose;
 import dev.septian.vaulthiveserver.domain.responses.RawgPagedResponse;
 import dev.septian.vaulthiveserver.services.GameClient;
 
@@ -55,12 +56,32 @@ public class GameClientImpl implements GameClient {
 
     @Override
     public GameDto getDetails(int id) {
-        return restClient.get()
+        // return restClient.get()
+        //         .uri(uriBuilder -> uriBuilder.path(endpoint + "/" + id)
+        //                 .queryParam("key", apiKey)
+        //                 .build())
+        //         .retrieve()
+        //         .body(GameDto.class);
+        RawgGameRespnose response = restClient.get()
                 .uri(uriBuilder -> uriBuilder.path(endpoint + "/" + id)
                         .queryParam("key", apiKey)
                         .build())
                 .retrieve()
-                .body(GameDto.class);
+                .body(RawgGameRespnose.class);
+        GameDto game = GameDto.builder()
+                .id(response.getId())
+                .name(response.getName())
+                .slug(response.getSlug())
+                .description(response.getDescription())
+                .released(response.getReleased())
+                .rating(response.getRating())
+                .developers(response.getDevelopers())
+                .publishers(response.getPublishers())
+                .genres(response.getGenres())
+                .platforms(response.getPlatforms())
+                .build();
+
+        return game;
     }
 
     private MultiValueMap<String, String> toMultiValueMap(Map<String, String> params) {
