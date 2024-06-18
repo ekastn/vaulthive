@@ -13,10 +13,12 @@ spring:
 
     jpa:
         hibernate:
-            ddl-auto: update
+            ddl-auto: create
         database: mysql
         show-sql: true
 
-# logging:
-#     level:
-#         root: DEBUG
+logging:
+    level:
+        org.springframework.security: DEBUG
+        org.hibernate.sql: DEBUG
+    
