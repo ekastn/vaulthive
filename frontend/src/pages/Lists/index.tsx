@@ -1,8 +1,16 @@
+import { useQuery } from "@tanstack/react-query";
 import { CgProfile } from "react-icons/cg";
 import { FaHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { getListsApi } from "../../services/ListService";
+import Spinner from "../../components/Spinner";
 
 const Lists = () => {
+    const { data, isLoading } = useQuery({
+        queryKey: ["lists"],
+        queryFn: async () => getListsApi(),
+    });
+
     return (
         <main className="px-24 mt-14">
             <div className="flex flex-col items-center justify-center gap-4">
@@ -15,27 +23,25 @@ const Lists = () => {
                 <div className="rounded-lg">
                     <h2 className="font-light uppercase">recently added</h2>
                     <hr className="w-full h-[1px] mt-2 mb-6 bg-gray-500 border-0" />
+                    {isLoading ? <Spinner className="" /> : null}
                     <div className="flex flex-col gap-8">
-                        {[1, 2, 3, 4].map((index) => (
-                            <div className="flex gap-4 tems-start" key={index}>
+                        {data?.map((list: ListGame) => (
+                            <div key={list.id} className="flex gap-4 items-start">
                                 <div className="aspect-video h-[100px] bg-gray-500"></div>
                                 <div className="flex flex-col gap-2">
-                                    <h3 className="text-xl font-bold">Some thing to do with game</h3>
+                                    <h3 className="text-xl font-bold">{list.title}</h3>
                                     <div className="flex items-center gap-2 text-xs text-gray-400">
                                         <div className="flex items-center gap-1 text-gray-200">
                                             <CgProfile className="size-4" />
-                                            <p>Deeznuts</p>
+                                            <p>{list.user?.username}</p>
                                         </div>
-                                        <p>200 games</p>
+                                        <p>{list.games.length} games</p>
                                         <div className="flex items-center gap-1">
                                             <FaHeart className="size-4" />
-                                            <p>100K</p>
+                                            <p>1K</p>
                                         </div>
                                     </div>
-                                    <p className="text-sm text-gray-500 text-light">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto eum consequatur
-                                        praesentium deleniti, debitis repudiandae deserunt libero aliquid! Quos, magnam.
-                                    </p>
+                                    <p className="text-sm text-gray-500 text-light">{list.description}</p>
                                 </div>
                             </div>
                         ))}

@@ -12,3 +12,8 @@ export const createListApi = async (userId: number, title: string, description: 
     });
     return data;
 }
+
+export const getListsApi = async () => {
+    const response = await axios.get<ListGame[]>(`${API_URL}/lists/`);
+    return response.data;
+}
