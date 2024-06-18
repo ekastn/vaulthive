@@ -1,6 +1,7 @@
 package dev.septian.vaulthiveserver.domain.responses;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -34,14 +35,17 @@ public class RawgGameRespnose {
 
     private float rating;
 
+    @JsonAlias("background_image")
+    @JsonProperty("imageUrl")
+    private String imageUrl;
+
     private Set<DeveloperDto> developers;
 
     private Set<PublisherDto> publishers;
 
     private Set<GenreDto> genres;
 
-    @JsonAlias("platforms.platform")
-    @JsonProperty("platforms")
+    @JsonProperty("parent_platforms")
     private Set<PlatformWrapper> platforms;
 
     @Data
@@ -50,7 +54,7 @@ public class RawgGameRespnose {
     }
 
     public Set<PlatformDto> getPlatforms() {
-        return platforms.stream().map(PlatformWrapper::getPlatform).collect(java.util.stream.Collectors.toSet());
+        return platforms.stream().map(PlatformWrapper::getPlatform).collect(Collectors.toSet());
     }
 
 }
