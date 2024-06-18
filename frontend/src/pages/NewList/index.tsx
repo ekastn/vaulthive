@@ -1,15 +1,26 @@
 import { useState } from "react";
 import SearchGameInput from "../../components/SearchGameInput";
 import { IoMdClose } from "react-icons/io";
+import { createListApi } from "../../services/ListService";
+import { useAuth } from "../../context/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const NewList = () => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [listItems, setListItems] = useState<GameSearch[]>([]);
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const { user } = useAuth();
+
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(title, description);
+        const response = await createListApi(user!.id, title, description, listItems.map((item) => item.id));
+        setTitle("");
+        setDescription("");
+        setListItems([]);
+        console.log(response);
     };
 
     const handleSearchGame = (game: GameSearch) => {
