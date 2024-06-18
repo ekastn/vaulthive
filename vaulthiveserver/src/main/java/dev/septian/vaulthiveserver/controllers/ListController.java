@@ -3,13 +3,18 @@ package dev.septian.vaulthiveserver.controllers;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.septian.vaulthiveserver.domain.entities.ListEntity;
+import dev.septian.vaulthiveserver.domain.requests.ListRequest;
+import dev.septian.vaulthiveserver.services.GameService;
 import dev.septian.vaulthiveserver.services.ListService;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,15 +29,38 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class ListController {
 
     private final ListService listService;
+    private final GameService gameService;
 
-    public ListController(ListService listService) {
+    private static final Logger logger = LoggerFactory.getLogger(ListController.class);
+
+    public ListController(ListService listService, GameService gameService) {
         this.listService = listService;
+        this.gameService = gameService;
     }
 
     @PostMapping("/")
-    public ResponseEntity<ListEntity> createList(@RequestBody ListEntity listGame) {
-        ListEntity savedList = listService.save(listGame);
-        return new ResponseEntity<>(savedList, HttpStatus.CREATED);
+    public ResponseEntity<ListEntity> createList(@RequestBody ListRequest listRequest) {
+        ListEntity listEntity = ListEntity.builder()
+                .title(listRequest.getTitle())
+                .description(listRequest.getDescription())
+                .build();
+
+        listEntity.setGames(listRequest.getGameIds().stream()
+                .map(gameId -> gameService.findOne(gameId).orElse(null))
+                .filter(game -> game != null)
+                .collect(Collectors.toSet()));
+
+        logger.info("Creating list with title: {}", listEntity.getTitle());
+        logger.info("Games in list: {}", listEntity.getGames().size());
+
+        try {
+            ListEntity savedList = listService.save(listEntity);
+            logger.info("Saved list with ID: {}", savedList.getId());
+            return new ResponseEntity<>(savedList, HttpStatus.CREATED);
+        } catch (Exception e) {
+            logger.error("Failed to save list: {}", e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/")
