@@ -31,7 +31,7 @@ public class PublisherEntity {
 
     private String name;
 
-    private int gameCount;
+    private String slug;
 
     @Builder.Default
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

@@ -49,5 +49,13 @@ public class GameEntity {
 
     @Builder.Default
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER, mappedBy = "games")
+    private Set<GenreEntity> genres = new HashSet<>();
+
+    @Builder.Default
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER, mappedBy = "games")
+    private Set<PlatformEntity> platforms = new HashSet<>();
+
+    @Builder.Default
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER, mappedBy = "games")
     private Set<ListEntity> lists = new HashSet<>();
 }
