@@ -1,7 +1,5 @@
 package dev.septian.vaulthiveserver.domain.dtos;
 
-import java.util.Set;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,16 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ListDto {
+public class UserDto {
 
     private int id;
 
-    private String title;
-
-    private String description;
-
-    private UserDto user;
-
-    private Set<GameDto> games;
-
+    private String username;
+    
 }
