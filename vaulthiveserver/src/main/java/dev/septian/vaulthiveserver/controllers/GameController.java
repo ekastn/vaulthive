@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.septian.vaulthiveserver.domain.dtos.GameDto;
 import dev.septian.vaulthiveserver.domain.dtos.GameSearchDto;
+import dev.septian.vaulthiveserver.domain.entities.GameEntity;
+import dev.septian.vaulthiveserver.mappers.Mapper;
 import dev.septian.vaulthiveserver.services.GameService;
 
 @RestController
@@ -21,9 +23,11 @@ import dev.septian.vaulthiveserver.services.GameService;
 public class GameController {
 
     private final GameService gameService;
+    private final Mapper<GameEntity, GameDto> gameMapper;
 
-    public GameController(GameService gameService) {
+    public GameController(GameService gameService, Mapper<GameEntity, GameDto> gameMapper) {
         this.gameService = gameService;
+        this.gameMapper = gameMapper;
     }
 
     @GetMapping
@@ -34,8 +38,8 @@ public class GameController {
 
     @GetMapping("/{id}")
     public ResponseEntity<GameDto> getGameDetails(@PathVariable int id) {
-        Optional<GameDto> foundGame = gameService.findOne(id);
-        return foundGame.map(gameDto -> new ResponseEntity<>(gameDto, HttpStatus.OK))
+        Optional<GameEntity> foundGame = gameService.findOne(id);
+        return foundGame.map(game -> new ResponseEntity<>(gameMapper.mapTo(game), HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
