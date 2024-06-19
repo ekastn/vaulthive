@@ -13,13 +13,17 @@ const SearchGameInput = ({ handleClick }: { handleClick: (game: GameSearch) => v
     const handleSearchClick = (game: GameSearch) => {
         handleClick(game);
         setsearch("");
-    }
+    };
 
-    const { data, isLoading } = useQuery({
+    const { data, isLoading, error } = useQuery({
         enabled: search.length > 3,
         queryKey: ["games", { search }],
         queryFn: async () => getData<GameSearch[]>("games", { search }),
     });
+
+    if (error) {
+        console.log(error);
+    }
 
     return (
         <div className="relative flex flex-col ">
