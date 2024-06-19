@@ -6,49 +6,36 @@ const Navbar = () => {
     const { isLoggedIn, logout } = useAuth();
 
     return (
-        <nav className="w-full shadow-sm bg-transparent">
-            <div className="flex items-center h-16 px-24">
-                <Link to="/" className="flex items-center gap-2">
-                    <span className="text-2xl font-semibold">Vaulthive</span>
+        <div className="px-20 navbar bg-base-100">
+            <div className="navbar-start">
+                <Link to="/" className="text-2xl font-semibold btn btn-ghost">
+                    Vaulthive
                 </Link>
-                <div className="flex items-center gap-4 mx-auto">
-                    {NAVIGATION.map((item) => (
-                        <Link
-                            key={item.id}
-                            to={item.path}
-                            className="text-base font-medium uppercase transition-colors duration-200 hover:text-white"
-                        >
-                            {item.title}
-                        </Link>
-                    ))}
-                </div>
+            </div>
+            <div className="navbar-center">
+                {NAVIGATION.map((item) => (
+                    <Link key={item.id} to={item.path} className="text-lg font-light uppercase btn hover:text-white">
+                        {item.title}
+                    </Link>
+                ))}
+            </div>
+            <div className="navbar-end">
                 {!isLoggedIn() ? (
-                    <div className="flex items-center gap-4">
-                        <Link
-                            to="/login"
-                            className="text-base font-medium uppercase transition-colors duration-200 hover:text-white"
-                        >
+                    <div className="flex items-center">
+                        <Link to="/login" className="text-lg font-light uppercase btn hover:text-white">
                             sign in
                         </Link>
-                        <Link
-                            to="/register"
-                            className="text-base font-medium uppercase transition-colors duration-200 hover:text-white"
-                        >
+                        <Link to="/register" className="text-lg font-light uppercase btn hover:text-white">
                             create account
                         </Link>
                     </div>
                 ) : (
-                    <div className="flex items-center gap-4">
-                        <button
-                            onClick={logout}
-                            className="text-base font-medium uppercase transition-colors duration-200 hover:text-white"
-                        >
-                            logout
-                        </button>
-                    </div>
+                    <button onClick={logout} className="text-lg font-light uppercase btn hover:text-white">
+                        logout
+                    </button>
                 )}
             </div>
-        </nav>
+        </div>
     );
 };
 
