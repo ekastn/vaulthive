@@ -10,13 +10,13 @@ const NewList = () => {
     const [description, setDescription] = useState("");
     const [listItems, setListItems] = useState<GameSearch[]>([]);
 
-    const { user } = useAuth();
+    const { user, token } = useAuth();
 
     const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const response = await createListApi(user!.id, title, description, listItems.map((item) => item.id));
+        const response = await createListApi(user!.id, title, description, listItems.map((item) => item.id), token!);
         setTitle("");
         setDescription("");
         setListItems([]);
