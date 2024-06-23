@@ -7,19 +7,27 @@ export default {
     theme: {
         fontFamily: {
             sans: ["Inter", "sans-serif", ...defaultTheme.fontFamily.sans],
+            serif: [...defaultTheme.fontFamily.serif],
+            mono: [...defaultTheme.fontFamily.mono],
         },
-        extend: {
-            colors: {
-                txMain: "#e9e8f1",
-                bgMain: "#0a0814",
-                primary: "#9e94e5",
-                secondary: "#20108e",
-                accent: "#4228fd",
-            },
-        },
+        extend: {},
     },
     plugins: [daisyui],
     daisyui: {
-        themes: ["forest"],
+        themes: [
+            {
+                mytheme: {
+                    primary: "#7400ff",
+                    secondary: "#009cff",
+                    accent: "#00d3ff",
+                    neutral: "#002425",
+                    "base-100": "#141719",
+                    info: "#00d2ff",
+                    success: "#84d84e",
+                    warning: "#a26800",
+                    error: "#ff6e75",
+                },
+            },
+        ],
     },
 };
