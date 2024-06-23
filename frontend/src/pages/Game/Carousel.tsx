@@ -18,7 +18,7 @@ const Carousel = ({ images }: Props) => {
                 style={{ transform: `translateX(-${imageIndex * 100}%)` }}
             >
                 {images.map((image, index) => (
-                    <img key={index} src={image} className="skeleton rounded-md object-cover" />
+                    <img key={index} src={image} className="rounded-md object-cover" />
                 ))}
             </div>
             <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
@@ -39,7 +39,7 @@ const Carousel = ({ images }: Props) => {
                 <div className="flex items-center justify-center gap-2">
                     {images.map((_, i) => (
                         <div
-                            className={`transition-all w-3 h-3 bg-base-content rounded-full ${imageIndex === i ? "p-2 w-10" : "bg-opacity-50"} `}
+                            className={`transition-all w-3 h-3 bg-base-content rounded-full ${imageIndex === i ? "p-2 w-8" : "bg-opacity-50"} `}
                         />
                     ))}
                 </div>
