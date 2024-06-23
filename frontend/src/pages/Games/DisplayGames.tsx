@@ -25,8 +25,9 @@ const DisplayGames = ({ games, isLoading }: Props) => {
                     <figure>
                         <img
                             src={game.imageUrl}
-                            className="object-cover w-full cursor-pointer aspect-video"
                             alt={game.name}
+                            onClick={() => handleClick(game)}
+                            className="object-cover w-full cursor-pointer aspect-video"
                         />
                     </figure>
                     <div onClick={() => handleClick(game)} className="card-body p-4 gap-1 rounded-b-md bg-neutral">
