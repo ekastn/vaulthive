@@ -1,13 +1,14 @@
 package dev.septian.vaulthiveserver.services;
 
+import java.util.List;
 import java.util.Map;
 
-import dev.septian.vaulthiveserver.domain.dtos.GameDto;
-import dev.septian.vaulthiveserver.domain.dtos.GameSearchDto;
-import dev.septian.vaulthiveserver.domain.responses.RawgPagedResponse;
+import dev.septian.vaulthiveserver.domain.entities.GameEntity;
 
 public interface GameClient {
-    RawgPagedResponse<GameDto> getData();
-    RawgPagedResponse<GameSearchDto> getData(Map<String, String> params);
-    GameDto getDetails(int id);
+
+    List<GameEntity> getData(Map<String, String> params);
+
+    GameEntity getDetails(int id);
+
 }

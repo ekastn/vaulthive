@@ -11,6 +11,7 @@ import dev.septian.vaulthiveserver.domain.dtos.DeveloperDto;
 import dev.septian.vaulthiveserver.domain.dtos.GenreDto;
 import dev.septian.vaulthiveserver.domain.dtos.PlatformDto;
 import dev.septian.vaulthiveserver.domain.dtos.PublisherDto;
+import dev.septian.vaulthiveserver.domain.dtos.ScreenshotDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -47,6 +48,10 @@ public class RawgGameRespnose {
 
     @JsonProperty("parent_platforms")
     private Set<PlatformWrapper> platforms;
+
+    @JsonAlias("short_screenshots")
+    @JsonProperty("screenshots")
+    private Set<ScreenshotDto> screenshots;
 
     @Data
     public static class PlatformWrapper {

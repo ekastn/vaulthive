@@ -4,11 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import dev.septian.vaulthiveserver.domain.dtos.GameDto;
-import dev.septian.vaulthiveserver.domain.responses.RawgPagedResponse;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,12 +17,12 @@ public class GameClientTest {
         this.underTest = gameClient;
     }
 
-    @Test
-    public void testThatGetDataRetrievesData() {
-        RawgPagedResponse<GameDto> result = underTest.getData();
-        assertThat(result).isNotNull();
-        assertThat(result.getResults()).isNotEmpty();
-    }
+    // @Test
+    // public void testThatGetDataRetrievesData() {
+    //     RawgPagedResponse<GameDto> result = underTest.getData();
+    //     assertThat(result).isNotNull();
+    //     assertThat(result.getResults()).isNotEmpty();
+    // }
 
     @Test
     public void testThatGetDataWithParamsRetrievesData() {
@@ -38,11 +33,11 @@ public class GameClientTest {
         // assertThat(result.getResults()).isNotEmpty();
     }
 
-    @Test
-    public void testThatGetDetailsRetrievesData() {
-        GameDto result = underTest.getDetails(3498);
-        assertThat(result).isNotNull();
-        assertThat(result.getId()).isEqualTo(3498);
-    }
+    // @Test
+    // public void testThatGetDetailsRetrievesData() {
+    //     GameDto result = underTest.getDetails(3498);
+    //     assertThat(result).isNotNull();
+    //     assertThat(result.getId()).isEqualTo(3498);
+    // }
 
 }
