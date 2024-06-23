@@ -6,9 +6,9 @@ const Navbar = () => {
     const { isLoggedIn, logout } = useAuth();
 
     return (
-        <div className="px-20 navbar bg-base-100">
+        <div className="px-24 py-2 navbar">
             <div className="navbar-start">
-                <Link to="/" className="text-2xl font-semibold btn btn-ghost">
+                <Link to="/" className="text-3xl font-semibold">
                     Vaulthive
                 </Link>
             </div>
