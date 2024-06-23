@@ -10,47 +10,61 @@ const Login = () => {
 
     const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        loginUser(username, password);        
+        loginUser(username, password);
     };
 
     return (
-        <div className="fixed left-0 top-0 flex h-full min-h-screen w-full items-center justify-center bg-black/75 px-4 py-5">
-            <div className="w-full max-w-[400px] rounded-sm bg-gray-900 space-y-8 p-8">
-                <form className="flex flex-col gap-4" onSubmit={handleFormSubmit}>
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium">Username</label>
-                        <input
-                            type="text"
-                            placeholder="Username"
-                            className="w-full text-sm rounded-sm px-2 py-2 outline-none"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                        />
-                    </div>
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium">Password</label>
-                        <input
-                            type="password"
-                            placeholder="password"
-                            className="w-full text-sm rounded-sm px-2 py-2 outline-none"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                    </div>
-                    <button className="p-3 text-sm font-medium text-center text-white border rounded-md bg-primary">
-                        Sign Up
-                    </button>
-                </form>
-                <div>
-                    <p>
-                        Don't have an account?{" "}
-                        <Link to="/register" className="text-primary">
-                            Sign up
-                        </Link>
+        <div className="absolute inset-0 hero min-h-screen px-20 bg-base-200">
+            <div className="hero-content flex-col gap-24 lg:flex-row-reverse">
+                <div className="text-center lg:text-left">
+                    <h1 className="text-5xl font-bold">Login now!</h1>
+                    <p className="py-6">
+                        Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
+                        quasi. In deleniti eaque aut repudiandae et a id nisi.
                     </p>
-                    <Link to="/" className="text-primary">
-                        Back to home
-                    </Link>
+                </div>
+                <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+                    <form onSubmit={handleFormSubmit} className="card-body">
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text">Username</span>
+                            </label>
+                            <input
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                type="text"
+                                placeholder="username"
+                                className="input input-bordered"
+                                required
+                            />
+                        </div>
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text">Password</span>
+                            </label>
+                            <input
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                type="password"
+                                placeholder="password"
+                                className="input input-bordered"
+                                required
+                            />
+                            <label className="label">
+                                <Link to="/register" className="label-text-alt link link-hover">
+                                    Don't have an account? Register here
+                                </Link>
+                            </label>
+                            <label className="label">
+                                <Link to="/" className="label-text-alt link link-hover">
+                                    Back to Home
+                                </Link>
+                            </label>
+                        </div>
+                        <div className="form-control mt-6">
+                            <button className="btn btn-primary">Login</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

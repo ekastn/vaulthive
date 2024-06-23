@@ -3,7 +3,7 @@ import SearchGameInput from "../../components/SearchGameInput";
 import { IoMdClose } from "react-icons/io";
 import { createListApi } from "../../services/ListService";
 import { useAuth } from "../../context/useAuth";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const NewList = () => {
     const [title, setTitle] = useState("");
@@ -12,11 +12,17 @@ const NewList = () => {
 
     const { user, token } = useAuth();
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const response = await createListApi(user!.id, title, description, listItems.map((item) => item.id), token!);
+        const response = await createListApi(
+            user!.id,
+            title,
+            description,
+            listItems.map((item) => item.id),
+            token!,
+        );
         setTitle("");
         setDescription("");
         setListItems([]);
@@ -45,31 +51,28 @@ const NewList = () => {
                             <input
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
-                                className="w-full p-3 text-sm rounded-lg"
                                 type="text"
+                                placeholder="List Title"
+                                className="input w-full"
                             />
                         </div>
                         <div className="space-y-2">
                             <label className="text-base font-bold" htmlFor="message">
                                 Description
                             </label>
-
                             <textarea
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
-                                className="w-full p-3 text-sm rounded-lg"
                                 rows={8}
+                                placeholder="Description"
+                                className="textarea w-full"
                             ></textarea>
                         </div>
                     </form>
-                    <div className="flex items-center">
-                        <p className="px-4 py-2 uppercase bg-primary">add a film</p>
-                        <SearchGameInput handleClick={handleSearchGame} />
-                    </div>
                     <div className="">
                         <button
                             type="submit"
-                            className="inline-block w-full px-5 py-3 font-medium text-white bg-black rounded-lg sm:w-auto"
+                            className="inline-block w-full px-5 py-3 font-medium bg-secondary rounded-lg sm:w-auto"
                             form="new-list"
                         >
                             Send Enquiry
@@ -77,30 +80,36 @@ const NewList = () => {
                     </div>
                 </div>
 
-                <ul className="h-full overflow-y-scroll border border-gray-500 rounded-md">
-                    {listItems.length === 0 ? (
-                        <li className="flex items-center justify-center w-full h-full">
-                            <p>
-                                <strong>Your list is empty</strong>
-                            </p>
-                        </li>
-                    ) : (
-                        listItems.map((item) => (
-                            <li key={item.id} className="flex items-center justify-between px-2 py-4">
-                                <div className="flex gap-2 p-2">
-                                    <img className="w-[50px] object-cover" src={item.imageUrl} alt={item.name} />
-                                    <div>
-                                        <div className="text-sm font-medium">{item.name}</div>
-                                        <div className="text-xs">{new Date(item.released).getFullYear()}</div>
-                                    </div>
-                                </div>
-                                <div onClick={() => removeItem(item.id)} className="px-4">
-                                    <IoMdClose className="cursor-pointer" />
-                                </div>
+                <div className="space-y-4">
+                    <div className="flex items-center justify-end">
+                        <SearchGameInput handleClick={handleSearchGame} />
+                        <p className="px-4 py-2 uppercase bg-primary">add a game</p>
+                    </div>
+                    <ul className="h-[80%] overflow-y-scroll border border-gray-500 rounded-md">
+                        {listItems.length === 0 ? (
+                            <li className="flex items-center justify-center w-full h-full">
+                                <p>
+                                    <strong>Your list is empty</strong>
+                                </p>
                             </li>
-                        ))
-                    )}
-                </ul>
+                        ) : (
+                            listItems.map((item) => (
+                                <li key={item.id} className="flex items-center justify-between px-2 py-4">
+                                    <div className="flex gap-2 p-2">
+                                        <img className="w-[50px] object-cover" src={item.imageUrl} alt={item.name} />
+                                        <div>
+                                            <div className="text-sm font-medium">{item.name}</div>
+                                            <div className="text-xs">{new Date(item.released).getFullYear()}</div>
+                                        </div>
+                                    </div>
+                                    <div onClick={() => removeItem(item.id)} className="px-4">
+                                        <IoMdClose className="cursor-pointer" />
+                                    </div>
+                                </li>
+                            ))
+                        )}
+                    </ul>
+                </div>
             </div>
         </main>
     );

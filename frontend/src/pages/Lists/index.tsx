@@ -21,7 +21,7 @@ const Lists = () => {
                 <h1 className="text-xl uppercase font-extralight">
                     Collect, curate, and share. Lists are the perfect way to group games.
                 </h1>
-                <Link to="/lists/new" className="px-4 py-2 text-sm font-light bg-gray-800">
+                <Link to="/lists/new" className="px-4 py-2 text-sm font-light bg-secondary">
                     Start your own list
                 </Link>
             </div>
@@ -38,8 +38,8 @@ const Lists = () => {
                                     <div className="aspect-video h-[100px] bg-gray-500"></div>
                                     <div className="flex flex-col gap-2">
                                         <h3 className="text-xl font-bold">{list.title}</h3>
-                                        <div className="flex items-center gap-2 text-xs text-gray-400">
-                                            <div className="flex items-center gap-1 text-gray-200">
+                                        <div className="flex items-center gap-2 text-xs">
+                                            <div className="flex items-center gap-1">
                                                 <CgProfile className="size-4" />
                                                 <p>{list.user?.username}</p>
                                             </div>

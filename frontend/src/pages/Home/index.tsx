@@ -1,22 +1,20 @@
-import ImagePlaceholder from "../../assets/ImgPlaceholder.svg";
-
 const Home = () => {
     return (
-        <main className="w-scheen flex min-h-screen flex-col overflow-x-hidden">
-            <div>
-                <img
-                    className="fixed -z-10 h-[100vh] w-full object-cover"
-                    src="https://images7.alphacoders.com/327/327601.jpg"
-                    alt=""
-                />
-                <div className="flex h-screen flex-col justify-center gap-4 p-8">
-                    <h1 className="w-[50vw] text-5xl font-semibold">
+        <div className="min-h-screen px-20 font-mono hero bg-base-100">
+            <div className="grid w-full grid-cols-2 px-12 hero-content">
+                <div className="justify-self-start">
+                    <h1 className="text-5xl font-bold">Welcome!</h1>
+                    <p className="py-6">
                         Connect with fellow gamers and discover new games
-                    </h1>
-                    <button className="bg-accent max-w-max px-8 py-2">Get started</button>
+                    </p>
+                    <button className="btn btn-primary">Get Started</button>
                 </div>
+                <img
+                    src="https://media.rawg.io/media/games/618/618c2031a07bbff6b4f611f10b6bcdbc.jpg"
+                    className="w-[300px] h-[400px] rounded-lg shadow-2xl object-cover justify-self-end"
+                />
             </div>
-        </main>
+        </div>
     );
 };
 

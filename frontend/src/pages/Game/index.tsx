@@ -31,6 +31,8 @@ const Game = () => {
         console.log(error);
     }
 
+    console.log(game);
+
     return (
         <main className="px-24 py-4 flex flex-col gap-4 h-[calc(100vh-150px)]">
             <div className="flex justify-between">
@@ -55,12 +57,12 @@ const Game = () => {
             <div className="grid gap-7 grid-cols-[auto_max(30vw,300px)] h-full">
                 <div className="w-full carousel">
                     <div className="relative w-full carousel-item">
-                        <img src={game?.imageUrl} className={`w-full object-cover ${imageIndex === 0 ? "block" : "hidden"}`} />
+                        <img src={game?.imageUrl} className={`w-full rounded-md object-cover ${imageIndex === 0 ? "block" : "hidden"}`} />
                         {game?.screenshots.map((screenshot, index) => (
                             <img
                                 key={index + 1}
                                 src={screenshot.image}
-                                className={`w-full object-cover ${index + 1 === imageIndex ? "block" : "hidden"}`}
+                                className={`w-full rounded-md object-cover ${index + 1 === imageIndex ? "block" : "hidden"}`}
                             />
                         ))}
                         <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
@@ -78,7 +80,7 @@ const Game = () => {
                         <h2 className="mb-1 text-xl font-bold">Description</h2>
                         <p className="text-sm font-extralight">{game?.description}</p>
                     </div>
-                    <div className="w-full px-4 py-4 space-y-1 text-sm font-light text-gray-300 bg-gray-900">
+                    <div className="w-full px-4 py-4 space-y-1 text-sm font-light bg-base-300">
                         <div>
                             Genre:{" "}
                             {game?.genres.map(
