@@ -17,6 +17,9 @@ declare type GameSearch = {
     slug: string;
     released: Date;
     imageUrl: string;
+    rating: number;
+    genres: Common[];
+    platforms: Common[];
 };
 
 declare type Game = {
