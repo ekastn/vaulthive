@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/useAuth";
+import { useMutation } from "@tanstack/react-query";
+import FullScreenLoading from "../../components/FullScreenLoading";
 
 const Login = () => {
     const [username, setUsername] = useState("");
@@ -8,9 +10,15 @@ const Login = () => {
 
     const { loginUser } = useAuth();
 
+    const { mutate, isPending } = useMutation({
+        mutationFn: async () => {
+            await loginUser(username, password);
+        },
+    });
+
     const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        loginUser(username, password);
+        mutate();
     };
 
     return (
@@ -67,6 +75,7 @@ const Login = () => {
                     </form>
                 </div>
             </div>
+            {isPending && <FullScreenLoading />}
         </div>
     );
 };

@@ -1,18 +1,26 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/useAuth";
+import { useMutation } from "@tanstack/react-query";
+import FullScreenLoading from "../../components/FullScreenLoading";
 
 const Register = () => {
-    const [email, setEmail] = useState('');
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
 
     const { registerUser } = useAuth();
 
+    const { mutate, isPending } = useMutation({
+        mutationFn: async () => {
+            await registerUser(email, username, password);
+        },
+    });
+
     const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        registerUser(email, username, password);        
-    }
+        mutate();
+    };
 
     return (
         <div className="absolute inset-0 hero min-h-screen px-20 bg-base-200">
@@ -81,6 +89,7 @@ const Register = () => {
                     </form>
                 </div>
             </div>
+            {isPending && <FullScreenLoading />}
         </div>
     );
 };
