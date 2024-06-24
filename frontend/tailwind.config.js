@@ -10,7 +10,11 @@ export default {
             serif: [...defaultTheme.fontFamily.serif],
             mono: [...defaultTheme.fontFamily.mono],
         },
-        extend: {},
+        extend: {
+            aspectRatio: {
+                "3/4": "3 / 4",
+            },
+        },
     },
     plugins: [daisyui],
     daisyui: {
