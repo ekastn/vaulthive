@@ -1,4 +1,4 @@
-package dev.septian.vaulthiveserver.configurations;
+package dev.septian.vaulthiveserver.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
