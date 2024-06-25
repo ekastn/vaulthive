@@ -45,6 +45,10 @@ public class UserEntity implements UserDetails {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
     Set<ListEntity> lists = new HashSet<>();
 
+    @Builder.Default
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+    Set<WishlistEntity> wishlists = new HashSet<>();
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();
@@ -56,4 +60,12 @@ public class UserEntity implements UserDetails {
         }
         lists.add(list);
     }
+
+    public void addWishlist(WishlistEntity wishlist) {
+        if (wishlists == null) {
+            wishlists = new HashSet<>();
+        }
+        wishlists.add(wishlist);
+    }
+
 }

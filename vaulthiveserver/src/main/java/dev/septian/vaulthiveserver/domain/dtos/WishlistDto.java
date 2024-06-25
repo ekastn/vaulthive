@@ -1,6 +1,6 @@
 package dev.septian.vaulthiveserver.domain.dtos;
 
-import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,14 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserDto {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class WishlistDto {
 
-    private int id;
-
-    private String username;
-
-    Set<ListDto> lists;
-
-    Set<WishlistDto> wishlist;
+    private GameDto game;
     
 }
