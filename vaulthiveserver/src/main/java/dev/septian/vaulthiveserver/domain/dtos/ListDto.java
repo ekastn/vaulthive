@@ -19,7 +19,7 @@ public class ListDto {
 
     private String description;
 
-    private UserDto user;
+    private String username;
 
     private Set<GameDto> games;
 
