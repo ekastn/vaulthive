@@ -1,12 +1,24 @@
 import { CgPlayListAdd, CgPlayListRemove } from "react-icons/cg";
 import { FaStar } from "react-icons/fa";
+import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import Carousel from "./Carousel";
 import GameInfo from "./GameInfo";
 import Skeleton from "./Skeleton";
 import useGame from "./useGame";
 
 const Game = () => {
-    const { game, isLoadingGame, errorGame, images, mutateWishlist, isInWishlist, isPendingWishlist } = useGame();
+    const {
+        game,
+        isLoadingGame,
+        errorGame,
+        images,
+        mutateWishlist,
+        isInWishlist,
+        isPendingWishlist,
+        mutateLike,
+        isLiked,
+        isPendingLike,
+    } = useGame();
 
     if (isLoadingGame) {
         return <Skeleton />;
@@ -19,16 +31,21 @@ const Game = () => {
     const handleWishlistClick = () => {
         if (isPendingWishlist) return;
         mutateWishlist();
-        console.log(isInWishlist)
     };
+
+    const handleLikeClick = () => {
+        if (isPendingLike) return;
+        mutateLike();
+    }
+    
 
     return (
         <div className="px-24 py-4 flex flex-col gap-4 h-[calc(100vh-150px)]">
             <div className="flex justify-between">
                 <h1 className="text-4xl font-bold">{game?.name}</h1>
-                <div className="flex gap-6">
+                <div className="flex gap-2">
                     <div className="flex flex-col items-center px-2 py-1">
-                        <h3 className="text-sm uppercase font-extralight">Rating</h3>
+                        <h3 className="text-sm uppercase font-extralight tracking-widest">Rating</h3>
                         <div className="flex items-center gap-1">
                             <FaStar className="text-2xl" />
                             <p>
@@ -38,11 +55,19 @@ const Game = () => {
                         </div>
                     </div>
                     <div className="flex flex-col items-center px-2 py-1">
-                        <h3 className="text-sm uppercase font-extralight">Whishlist</h3>
+                        <h3 className="text-sm uppercase font-extralight tracking-widest">Whishlist</h3>
                         {isInWishlist ? (
                             <CgPlayListRemove onClick={handleWishlistClick} className="text-2xl cursor-pointer" />
                         ) : (
                             <CgPlayListAdd onClick={handleWishlistClick} className="text-2xl cursor-pointer" />
+                        )}
+                    </div>
+                    <div className="flex flex-col items-center px-2 py-1">
+                        <h3 className="text-sm uppercase font-extralight tracking-widest">Like</h3>
+                        {isLiked ? (
+                            <IoMdHeart onClick={handleLikeClick} className="text-xl cursor-pointer" />
+                        ) : (
+                            <IoMdHeartEmpty onClick={handleLikeClick} className="text-xl cursor-pointer" />
                         )}
                     </div>
                 </div>

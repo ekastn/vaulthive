@@ -11,3 +11,30 @@ export const searchGamesApi = async (param: { type: string; value: string }) => 
     const response = await axios.get<GameSearch[]>(`${API_URL}/games?filter=${param.type}&value=${param.value}`);
     return response.data;
 };
+
+export const getLikeGameApi = async (id: number) => {
+    const response = await axios.get<{ isLiked: boolean }>(`${API_URL}/games/${id}/like`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    });
+    return response.data;
+};
+
+export const likeGameApi = async (id: number) => {
+    const response = await axios.post(`${API_URL}/games/${id}/like`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    });
+    if (response.status === 201) {
+        return true;
+    }
+    return false;
+};
+
+export const unlikeGameApi = async (id: number) => {
+    const response = await axios.delete(`${API_URL}/games/${id}/like`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    });
+    if (response.status === 200) {
+        return true;
+    }
+    return false;
+};

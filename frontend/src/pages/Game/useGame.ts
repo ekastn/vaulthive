@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getGameDetailsApi } from "../../services/gameService";
+import { getGameDetailsApi, getLikeGameApi, likeGameApi, unlikeGameApi } from "../../services/gameService";
 import { useState } from "react";
 import { useAuth } from "../../context/useAuth";
 import { addGameToWishlistApi, getWishlistApi, removeGameFromWishlistApi } from "../../services/wishlistService";
@@ -10,6 +10,7 @@ const useGame = () => {
 
     const [images, setImages] = useState<string[]>([]);
     const [isInWishlist, setIsInWishlist] = useState(false);
+    const [isLiked, setIsLiked] = useState(false);
 
     const { state } = useLocation();
 
@@ -41,6 +42,15 @@ const useGame = () => {
         },
     });
 
+    const { isLoading: isLoadingLike } = useQuery({
+        enabled: isLoggedIn(),
+        queryKey: ["like"],
+        queryFn: async () => {
+            const { isLiked } = await getLikeGameApi(state.game.id);
+            setIsLiked(isLiked);
+        },
+    });
+
     const { mutate: mutateWishlist, isPending: isPendingWishlist } = useMutation({
         mutationFn: async () => {
             if (!isLoggedIn()) {
@@ -59,15 +69,37 @@ const useGame = () => {
         },
     });
 
+    const { mutate: mutateLike, isPending: isPendingLike } = useMutation({
+        mutationFn: async () => {
+            if (!isLoggedIn()) {
+                navigate("/login");
+                return;
+            }
+
+            if (isLiked) {
+                await unlikeGameApi(state.game.id);
+            } else {
+                await likeGameApi(state.game.id);
+            }
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["like"] });
+        },
+    });
+
     return {
         game,
         isLoadingGame,
         images,
         errorGame,
         mutateWishlist,
+        mutateLike,
         isInWishlist,
+        isLiked,
         isLoadingWishlist,
+        isLoadingLike,
         isPendingWishlist,
+        isPendingLike,
     };
 };
 
