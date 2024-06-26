@@ -1,5 +1,6 @@
 package dev.septian.vaulthiveserver.services.impl;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -9,32 +10,35 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import dev.septian.vaulthiveserver.domain.dtos.GameDto;
 import dev.septian.vaulthiveserver.domain.entities.DeveloperEntity;
 import dev.septian.vaulthiveserver.domain.entities.GameEntity;
+import dev.septian.vaulthiveserver.domain.entities.GameLikeEntity;
 import dev.septian.vaulthiveserver.domain.entities.GenreEntity;
 import dev.septian.vaulthiveserver.domain.entities.PlatformEntity;
 import dev.septian.vaulthiveserver.domain.entities.PublisherEntity;
 import dev.septian.vaulthiveserver.domain.entities.ScreenshotEntity;
+import dev.septian.vaulthiveserver.domain.entities.UserEntity;
+import dev.septian.vaulthiveserver.repositories.GameLikeRepository;
 import dev.septian.vaulthiveserver.repositories.GameRepository;
 import dev.septian.vaulthiveserver.services.GameService;
 import dev.septian.vaulthiveserver.services.enums.FilterType;
 import dev.septian.vaulthiveserver.services.GameClient;
-import dev.septian.vaulthiveserver.mappers.Mapper;
 
 @Service
 public class GameServiceImpl implements GameService {
 
     private final GameClient gameClient;
     private final GameRepository gameRepository;
+    private final GameLikeRepository gameLikeRepository;
 
     Logger logger = LoggerFactory.getLogger(GameClient.class);
 
     private boolean isFetchingToRawgApi = false;
 
-    public GameServiceImpl(GameClient gameClient, GameRepository gameRepository) {
+    public GameServiceImpl(GameClient gameClient, GameRepository gameRepository, GameLikeRepository gameLikeRepository) {
         this.gameClient = gameClient;
         this.gameRepository = gameRepository;
+        this.gameLikeRepository = gameLikeRepository;
     }
 
     @Override
@@ -111,6 +115,42 @@ public class GameServiceImpl implements GameService {
         }
 
         return foundGames;
+    }
+
+    @Override
+    public boolean isLiked(int gameId, UserEntity userEntity) {
+        Optional<GameLikeEntity> gameLikeEntity = gameLikeRepository.findByGame_IdAndUser_Id(gameId, userEntity.getId());
+        return gameLikeEntity.isPresent();
+    }
+
+    @Override
+    public void likeGame(int gameId, UserEntity userEntity) {
+        Optional<GameEntity> gameEntity = gameRepository.findById(gameId);
+
+        if (gameEntity.isEmpty()) {
+            throw new RuntimeException("Game not found");
+        }
+
+        GameLikeEntity gameLikeEntity = GameLikeEntity.builder()
+                .game(gameEntity.get())
+                .user(userEntity)
+                .build();
+        
+        gameLikeRepository.save(gameLikeEntity);
+    }
+
+    @Override
+    public void unlikeGame(int gameId, UserEntity userEntity) {
+        Optional<GameLikeEntity> gameLikeEntity = gameLikeRepository.findByGame_IdAndUser_Id(gameId, userEntity.getId());
+
+        if (gameLikeEntity.isEmpty()) {
+            throw new RuntimeException("Game like not found");
+        }
+
+        gameLikeEntity.get().getUser().getGameLikes().remove(gameLikeEntity.get());
+        gameLikeEntity.get().getGame().getLikes().remove(gameLikeEntity.get());
+
+        gameLikeRepository.delete(gameLikeEntity.get());
     }
 
     private List<GameEntity> getGameByFilter(Map<String, String> params) {

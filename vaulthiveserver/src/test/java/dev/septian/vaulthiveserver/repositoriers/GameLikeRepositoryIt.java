@@ -46,6 +46,7 @@ public class GameLikeRepositoryIt {
                 .build();
         
         userEntity.addGameLike(gameLikeEntity);
+        gameEntity.addLike(gameLikeEntity);
 
         GameLikeEntity saved = underTest.save(gameLikeEntity);
 

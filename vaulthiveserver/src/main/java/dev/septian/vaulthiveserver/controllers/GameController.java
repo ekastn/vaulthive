@@ -7,6 +7,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,9 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.septian.vaulthiveserver.domain.dtos.GameDto;
 import dev.septian.vaulthiveserver.domain.entities.GameEntity;
+import dev.septian.vaulthiveserver.domain.entities.UserEntity;
 import dev.septian.vaulthiveserver.domain.responses.GameSearchResponse;
 import dev.septian.vaulthiveserver.mappers.Mapper;
 import dev.septian.vaulthiveserver.services.GameService;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @RestController
 @RequestMapping("/api/games")
@@ -59,6 +64,38 @@ public class GameController {
         Optional<GameEntity> foundGame = gameService.findOne(id);
         return foundGame.map(game -> new ResponseEntity<>(gameMapper.mapTo(game), HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/{id}/like")
+    public ResponseEntity<Map<String, Boolean>> isLiked(@PathVariable int id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserEntity user = (UserEntity) authentication.getPrincipal();
+        return new ResponseEntity<>(Map.of("isLiked", gameService.isLiked(id, user)), HttpStatus.OK);
+    }
+
+    @PostMapping("/{id}/like")
+    public ResponseEntity<Map<String, String>> likeGame(@PathVariable int id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserEntity user = (UserEntity) authentication.getPrincipal();
+        if (user == null) return new ResponseEntity<>(Map.of("error", "User not found"), HttpStatus.UNAUTHORIZED);
+        try {
+            gameService.likeGame(id, user);
+            return new ResponseEntity<>(Map.of("message", "Game liked"), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(Map.of("error", "Error liking game: " + e.toString()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/{id}/like")
+    public ResponseEntity<Map<String, String>> unlikeGame(@PathVariable int id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserEntity user = (UserEntity) authentication.getPrincipal();
+        try {
+            gameService.unlikeGame(id, user);
+            return new ResponseEntity<>(Map.of("message", "Game unliked"), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(Map.of("error", "Error unliking game: " + e.toString()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
