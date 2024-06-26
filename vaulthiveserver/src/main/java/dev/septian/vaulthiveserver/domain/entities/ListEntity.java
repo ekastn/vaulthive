@@ -14,6 +14,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -52,11 +53,22 @@ public class ListEntity {
     )
     private Set<GameEntity> games = new HashSet<>();
 
+    @Builder.Default
+    @OneToMany(mappedBy = "list", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ListLikeEntity> likes = new HashSet<>();
+
     public void addGame(GameEntity game) {
         if (games == null) {
             games = new HashSet<>();
         }
         games.add(game);
+    }
+
+    public void addLike(ListLikeEntity like) {
+        if (likes == null) {
+            likes = new HashSet<>();
+        }
+        likes.add(like);
     }
 
 }

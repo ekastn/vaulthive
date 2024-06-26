@@ -1,16 +1,29 @@
 package dev.septian.vaulthiveserver;
 
-import java.util.Set;
-import java.util.HashSet;
 
-import dev.septian.vaulthiveserver.domain.entities.DeveloperEntity;
 import dev.septian.vaulthiveserver.domain.entities.GameEntity;
 import dev.septian.vaulthiveserver.domain.entities.ListEntity;
-import dev.septian.vaulthiveserver.domain.entities.PublisherEntity;
 import dev.septian.vaulthiveserver.domain.entities.UserEntity;
 
 public final class TestData {
     private TestData() {
+    }
+
+    public static UserEntity createUserEntity() {
+        return UserEntity.builder()
+                .username("user")
+                .email("user@test.com")
+                .password("password")
+                .build();
+    }
+
+    public static GameEntity createGameEntity() {
+        return GameEntity.builder()
+                .name("Game")
+                .description("Description of Game")
+                .released("2021-01-01")
+                .rating(5.0f)
+                .build();
     }
 
     public static ListEntity createListEntityA() {
