@@ -30,7 +30,7 @@ public class GameClientImpl implements GameClient {
 
     private final Logger logger = LoggerFactory.getLogger(GameClientImpl.class);
 
-    @Value("${RAWG_API_KEY}")
+    @Value("${VH_RAWG_API_KEY}")
     private String apiKey;
 
     private String endpoint = "/games";

@@ -20,7 +20,7 @@ import dev.septian.vaulthiveserver.services.JwtService;
 @Service
 public class JwtServiceImpl implements JwtService {
 
-    @Value("${JWT_SECRET_KEY}")
+    @Value("${VH_JWT_SECRET_KEY}")
     private String secretKey;
 
     private long jwtExpiration = 2592000000L;

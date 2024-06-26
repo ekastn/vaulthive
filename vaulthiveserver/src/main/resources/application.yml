@@ -1,14 +1,14 @@
 server:
-    port: ${SERVER_PORT:8080}
+    port: ${VH_SERVER_PORT:8080}
 
 spring:
     application:
         name: VaulthiveServer
 
     datasource:
-        url: ${DATABASE_URL}?createDatabaseIfNotExist=true
-        username: ${DATABASW_USERNAME}
-        password: ${DATABASE_PASSWORD}
+        url: ${VH_DATABASE_URL}?createDatabaseIfNotExist=true
+        username: ${VH_DATABASE_USERNAME}
+        password: ${VH_DATABASE_PASSWORD}
         driver-class-name: com.mysql.cj.jdbc.Driver
 
     jpa:
