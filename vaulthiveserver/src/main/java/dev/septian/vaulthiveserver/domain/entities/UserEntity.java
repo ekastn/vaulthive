@@ -42,12 +42,16 @@ public class UserEntity implements UserDetails {
     private String password;
 
     @Builder.Default
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user", orphanRemoval = true)
     Set<ListEntity> lists = new HashSet<>();
 
     @Builder.Default
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user", orphanRemoval = true)
     Set<WishlistEntity> wishlists = new HashSet<>();
+
+    @Builder.Default
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user", orphanRemoval = true)
+    Set<ListLikeEntity> listLikes = new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -66,6 +70,13 @@ public class UserEntity implements UserDetails {
             wishlists = new HashSet<>();
         }
         wishlists.add(wishlist);
+    }
+
+    public void addListLike(ListLikeEntity listLike) {
+        if (listLikes == null) {
+            listLikes = new HashSet<>();
+        }
+        listLikes.add(listLike);
     }
 
 }
