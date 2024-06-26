@@ -19,6 +19,7 @@ public final class TestData {
 
     public static GameEntity createGameEntity() {
         return GameEntity.builder()
+                .id(1)
                 .name("Game")
                 .description("Description of Game")
                 .released("2021-01-01")

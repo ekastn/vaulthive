@@ -53,6 +53,10 @@ public class UserEntity implements UserDetails {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user", orphanRemoval = true)
     Set<ListLikeEntity> listLikes = new HashSet<>();
 
+    @Builder.Default
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user", orphanRemoval = true)
+    Set<GameLikeEntity> gameLikes = new HashSet<>();
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();
@@ -77,6 +81,13 @@ public class UserEntity implements UserDetails {
             listLikes = new HashSet<>();
         }
         listLikes.add(listLike);
+    }
+
+    public void addGameLike(GameLikeEntity gameLike) {
+        if (gameLikes == null) {
+            gameLikes = new HashSet<>();
+        }
+        gameLikes.add(gameLike);
     }
 
 }

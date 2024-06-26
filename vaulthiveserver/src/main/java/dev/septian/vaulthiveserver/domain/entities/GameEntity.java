@@ -66,4 +66,16 @@ public class GameEntity {
     @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "game")
     private Set<ScreenshotEntity> screenshots = new HashSet<>();
+
+    @Builder.Default
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "game")
+    private Set<GameLikeEntity> likes = new HashSet<>();
+
+    public void addLike(GameLikeEntity like) {
+        if (likes == null) {
+            likes = new HashSet<>();
+        }
+        likes.add(like);
+    }
+
 }
