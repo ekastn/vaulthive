@@ -1,9 +1,9 @@
 export const NAVIGATION = [
-    {
-        id: crypto.randomUUID(),
-        title: "Home",
-        path: "/",
-    },
+    // {
+    //     id: crypto.randomUUID(),
+    //     title: "Home",
+    //     path: "/",
+    // },
     {
         id: crypto.randomUUID(),
         title: "Games",
@@ -117,3 +117,18 @@ export const FILTER_TYPES = {
     GENRE: "genre",
     NAME: "search",
 };
+
+export const PROFILE_TABS = [
+    {
+        id: crypto.randomUUID(),
+        title: "Wishlist",
+    },
+    {
+        id: crypto.randomUUID(),
+        title: "Lists",
+    },
+    {
+        id: crypto.randomUUID(),
+        title: "Likes",
+    },
+]

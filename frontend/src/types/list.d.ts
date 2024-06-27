@@ -8,6 +8,6 @@ declare type ListGame = {
     id: number;
     title: string;
     description: string;
-    user: { id: number; username: string;}
+    username: string;
     games: Game[];
 };
