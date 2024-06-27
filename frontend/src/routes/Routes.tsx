@@ -9,6 +9,7 @@ import Game from "../pages/Game";
 import NewList from "../pages/NewList";
 import ProtectedRoute from "./ProtectedRoute";
 import List from "../pages/List";
+import Profile from "../pages/Profile";
 
 export const router = createBrowserRouter([
     {
@@ -16,6 +17,7 @@ export const router = createBrowserRouter([
         element: <App />,
         children: [
             { path: "", element: <Home /> },
+            { path: "/:username", element: <Profile />},
             { path: "login", element: <Login /> },
             { path: "register", element: <Register /> },
             { path: "games", element: <Games /> },
