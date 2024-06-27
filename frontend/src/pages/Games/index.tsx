@@ -21,20 +21,20 @@ const Games = () => {
     }
 
     return (
-        <div className="min-h-screen px-24 mt-12 mb-24 overflow-hidden text-sm">
+        <div className="flex flex-col items-center min-h-screen mt-8 mb-24 gap-8 overflow-hidden">
             <Filters setFilter={setFilter} />
             {games ? (
                 <DisplayGames games={games!} isLoading={isLoading} />
             ) : (
-                <div className="space-y-4">
+                <div className="space-y-4 w-full">
                     <div>
                         <h2 className="text-xl font-light uppercase">popular games</h2>
-                        <div className="divider mt-1"></div>
+                        <div className="mt-1 divider"></div>
                         <DisplayGames games={popularGames!} isLoading={isLoadingPopularGames} />
                     </div>
                     <div>
                         <h2 className="text-xl font-light uppercase">recently liked</h2>
-                        <div className="divider mt-1"></div>
+                        <div className="mt-1 divider"></div>
                         <DisplayGames games={recentlyLikedGames!} isLoading={isLoadingRecentllyLikedGames} />
                     </div>
                 </div>

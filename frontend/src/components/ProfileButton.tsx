@@ -1,7 +1,8 @@
 import { CgProfile } from "react-icons/cg";
+import { HiDotsVertical } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
+import { PROFILE_TABS } from "../constants";
 import { useAuth } from "../context/useAuth";
-import { RiArrowDropDownLine } from "react-icons/ri";
 
 const ProfileButton = () => {
     const { logout, user } = useAuth();
@@ -15,12 +16,9 @@ const ProfileButton = () => {
     return (
         <div className="dropdown dropdown-end">
             <div tabIndex={0} role="button" className="flex">
-                <h3 className="text-lg font-light uppercase border-0 btn bg-transparent hover:text-white">
-                    {user?.username}
-                </h3>
-                <div className="flex items-center">
-                    <RiArrowDropDownLine className="size-8" />
+                <div className="flex items-center gap-2">
                     <CgProfile className="size-8" />
+                    <HiDotsVertical className="size-5" />
                 </div>
             </div>
             <ul
@@ -28,38 +26,24 @@ const ProfileButton = () => {
                 className="menu menu-sm dropdown-content rounded-sm z-[1] mt-3 w-40 p-2 shadow bg-gray-700"
             >
                 <li>
-                    {" "}
                     <a onClick={handleDropdownClick} className="text-sm">
                         Profile
-                    </a>{" "}
+                    </a>
+                </li>
+                {PROFILE_TABS.map((tab) => (
+                    <li key={tab.id}>
+                        <a onClick={handleDropdownClick} className="text-sm">
+                            {tab.title}
+                        </a>
+                    </li>
+                ))}
+                <li>
+                    <div className="divider my-0"></div>
                 </li>
                 <li>
-                    {" "}
-                    <a onClick={handleDropdownClick} className="text-sm">
-                        Wishlist
-                    </a>{" "}
-                </li>
-                <li>
-                    {" "}
-                    <a onClick={handleDropdownClick} className="text-sm">
-                        Lists
-                    </a>{" "}
-                </li>
-                <li>
-                    {" "}
-                    <a onClick={handleDropdownClick} className="text-sm">
-                        Likes
-                    </a>{" "}
-                </li>
-                <li>
-                    {" "}
-                    <div className="divider my-0"></div>{" "}
-                </li>
-                <li>
-                    {" "}
                     <a onClick={logout} className="text-sm">
                         Sign Out
-                    </a>{" "}
+                    </a>
                 </li>
             </ul>
         </div>
