@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { NAVIGATION } from "../constants";
 import { useAuth } from "../context/useAuth";
 import ProfileButton from "./ProfileButton";
-import { IoSearch } from "react-icons/io5";
+import TopBarSearch from "./TopBarSearch";
 
 const Navbar = () => {
     const { isLoggedIn } = useAuth();
@@ -15,19 +15,7 @@ const Navbar = () => {
                     Vaulthive
                 </Link>
             </div>
-            <div className="w-full h-full mx-auto">
-                <div className="relative flex items-center w-full h-8 overflow-hidden bg-white rounded-sm focus-within:shadow-lg">
-                    <div className="grid w-12 h-full text-gray-500 place-items-center">
-                        <IoSearch />
-                    </div>
-                    <input
-                        className="w-full pr-2 text-sm text-gray-800 outline-none placeholder:text-gray-500"
-                        type="text"
-                        id="search"
-                        placeholder="Search"
-                    />
-                </div>
-            </div>
+            <TopBarSearch />
             <div className="flex items-center gap-8">
                 {NAVIGATION.map((item) => (
                     <Link key={item.id} to={item.path} className="text-lg uppercase hover:text-white">

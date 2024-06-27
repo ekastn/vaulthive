@@ -4,7 +4,7 @@ type Props = {
 const GameInfo = ({ game }: Props) => {
     return (
         <div className="flex flex-col overflow-y-hidden">
-            <div className="h-full px-4 py-2 pr-6 overflow-y-scroll space-y-1 text-[10pt] font-light">
+            <div className="h-full px-4 py-2 pr-6 overflow-y-auto space-y-1 text-[10pt] font-light">
                 <h2 className="mb-1 text-xl font-bold">Description</h2>
                 <p className="text-sm font-extralight">{game?.description}</p>
             </div>
