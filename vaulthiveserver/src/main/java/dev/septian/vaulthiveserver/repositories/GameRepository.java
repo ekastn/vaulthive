@@ -1,8 +1,10 @@
 package dev.septian.vaulthiveserver.repositories;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import dev.septian.vaulthiveserver.domain.entities.GameEntity;
@@ -23,5 +25,14 @@ public interface GameRepository extends JpaRepository<GameEntity, Integer> {
     boolean existsByGenresAndId(GenreEntity genre, Integer id);
 
     boolean existsByPlatformsAndId(PlatformEntity platform, Integer id);
+
+    @Query("SELECT g FROM GameEntity g LEFT JOIN g.likes l GROUP BY g.id ORDER BY COUNT(l) DESC LIMIT 10")
+    List<GameEntity> findPopularGames();
+
+    @Query("SELECT g FROM GameEntity g LEFT JOIN g.likes l WHERE l.createdAt >= :startDate GROUP BY g.id ORDER BY COUNT(l) DESC LIMIT 10")
+    List<GameEntity> findPopularGamesByDateRange(LocalDate startDate);
+
+    @Query("SELECT g FROM GameEntity g LEFT JOIN g.likes l GROUP BY g.id ORDER BY MAX(l.createdAt) DESC LIMIT 10")
+    List<GameEntity> findRecentlyLikedGames();
 
 }

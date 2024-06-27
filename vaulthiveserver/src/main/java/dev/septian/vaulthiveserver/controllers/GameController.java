@@ -59,6 +59,52 @@ public class GameController {
         return new ResponseEntity<>(gameResponses, HttpStatus.OK);
     }
 
+    @GetMapping("/popular")
+    public ResponseEntity<List<GameSearchResponse>> getPopularGames() {
+        List<GameEntity> popularGames = gameService.findPopularGames();
+        List<GameDto> gameDtos = popularGames.stream()
+                .map(gameMapper::mapTo)
+                .collect(Collectors.toList());
+
+        List<GameSearchResponse> gameResponses = gameDtos.stream()
+                .map(game -> GameSearchResponse.builder()
+                        .id(game.getId())
+                        .name(game.getName())
+                        .slug(game.getSlug())
+                        .released(game.getReleased())
+                        .imageUrl(game.getImageUrl())
+                        .rating(game.getRating())
+                        .genres(game.getGenres())
+                        .platforms(game.getPlatforms())
+                        .build())
+                .collect(Collectors.toList());
+
+        return new ResponseEntity<>(gameResponses, HttpStatus.OK);
+    }
+
+    @GetMapping("/recently-liked")
+    public ResponseEntity<List<GameSearchResponse>> getRecentlyLikedGames() {
+        List<GameEntity> recentlyLikedGames = gameService.findRecentlyLikedGames();
+        List<GameDto> gameDtos = recentlyLikedGames.stream()
+                .map(gameMapper::mapTo)
+                .collect(Collectors.toList());
+
+        List<GameSearchResponse> gameResponses = gameDtos.stream()
+                .map(game -> GameSearchResponse.builder()
+                        .id(game.getId())
+                        .name(game.getName())
+                        .slug(game.getSlug())
+                        .released(game.getReleased())
+                        .imageUrl(game.getImageUrl())
+                        .rating(game.getRating())
+                        .genres(game.getGenres())
+                        .platforms(game.getPlatforms())
+                        .build())
+                .collect(Collectors.toList());
+
+        return new ResponseEntity<>(gameResponses, HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<GameDto> getGameDetails(@PathVariable int id) {
         Optional<GameEntity> foundGame = gameService.findOne(id);

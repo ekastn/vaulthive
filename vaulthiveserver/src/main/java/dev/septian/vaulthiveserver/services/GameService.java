@@ -1,5 +1,6 @@
 package dev.septian.vaulthiveserver.services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -18,5 +19,11 @@ public interface GameService {
     void likeGame(int gameId, UserEntity userEntity);
 
     void unlikeGame(int gameId, UserEntity userEntity);
+
+    List<GameEntity> findPopularGames();
+
+    List<GameEntity> findPopularGamesByDateRange(LocalDate startDate);
+
+    List<GameEntity> findRecentlyLikedGames();
 
 }

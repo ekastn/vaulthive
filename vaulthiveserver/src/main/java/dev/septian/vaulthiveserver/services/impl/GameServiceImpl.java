@@ -91,12 +91,12 @@ public class GameServiceImpl implements GameService {
             }
 
             for (GameEntity newGame : foundGames) {
-                logger.info("checking existing game");
+                logger.debug("checking existing game");
                 if (gameRepository.findById(newGame.getId()).isPresent()) {
                     continue;
                 }
 
-                logger.info("adding game to genres, platforms, screenshots");
+                logger.debug("adding game to genres, platforms, screenshots");
                 Set<GenreEntity> genres = newGame.getGenres();
                 Set<PlatformEntity> platforms = newGame.getPlatforms();
                 Set<ScreenshotEntity> screenshots = newGame.getScreenshots();
@@ -106,10 +106,10 @@ public class GameServiceImpl implements GameService {
                 screenshots.forEach(screenshot -> screenshot.setGame(newGame));
 
                 try {
-                    logger.info("saving game");
+                    logger.debug("saving game");
                     gameRepository.save(newGame);
                 } catch (Exception e) {
-                    logger.error("Error saving game: {}", e.getMessage());
+                    logger.debug("Error saving game: {}", e.getMessage());
                 }
             }
         }
@@ -151,6 +151,21 @@ public class GameServiceImpl implements GameService {
         gameLikeEntity.get().getGame().getLikes().remove(gameLikeEntity.get());
 
         gameLikeRepository.delete(gameLikeEntity.get());
+    }
+
+    @Override
+    public List<GameEntity> findPopularGames() {
+        return gameRepository.findPopularGames();
+    }
+
+    @Override
+    public List<GameEntity> findPopularGamesByDateRange(LocalDate startDate) {
+        return gameRepository.findPopularGamesByDateRange(startDate);
+    }
+
+    @Override
+    public List<GameEntity> findRecentlyLikedGames() {
+        return gameRepository.findRecentlyLikedGames();
     }
 
     private List<GameEntity> getGameByFilter(Map<String, String> params) {
@@ -213,4 +228,5 @@ public class GameServiceImpl implements GameService {
                 gameEntity.getGenres() != null && !gameEntity.getGenres().isEmpty() &&
                 gameEntity.getPlatforms() != null && !gameEntity.getPlatforms().isEmpty();
     }
+
 }
