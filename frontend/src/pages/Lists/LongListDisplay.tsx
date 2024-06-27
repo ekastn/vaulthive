@@ -23,7 +23,7 @@ const LongListDisplay = ({ lists }: Props) => {
                         <div className="flex items-center gap-2 text-xs">
                             <div className="flex items-center gap-1">
                                 <CgProfile className="size-4" />
-                                <p>{list.user?.username}</p>
+                                <p>{list.username}</p>
                             </div>
                             <p>{list.games.length} games</p>
                             <div className="flex items-center gap-1">

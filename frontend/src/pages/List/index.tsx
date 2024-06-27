@@ -13,7 +13,7 @@ const List = () => {
     return (
         <div className="px-24">
             <div>
-                <p className="text-base font-light">List by <span className="font-semibold">{list.user.username}</span></p>
+                <p className="text-base font-light">List by <span className="font-semibold">{list.username}</span></p>
             </div>
             <div className="divider mt-1"></div>
             <div className="flex flex-col gap-4 mb-12">
