@@ -7,6 +7,16 @@ export const getGameDetailsApi = async (id: number) => {
     return response.data;
 };
 
+export const getPopularGamesApi = async () => {
+    const response = await axios.get<GameSearch[]>(`${API_URL}/games/popular`);
+    return response.data;
+}
+
+export const getRecentlyLikedGamesApi = async () => {
+    const response = await axios.get<GameSearch[]>(`${API_URL}/games/recently-liked`);
+    return response.data;
+}
+
 export const searchGamesApi = async (param: { type: string; value: string }) => {
     const response = await axios.get<GameSearch[]>(`${API_URL}/games?filter=${param.type}&value=${param.value}`);
     return response.data;

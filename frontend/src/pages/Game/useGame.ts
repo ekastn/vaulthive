@@ -1,30 +1,32 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useLocation, useNavigate } from "react-router-dom";
-import { getGameDetailsApi, getLikeGameApi, likeGameApi, unlikeGameApi } from "../../services/gameService";
 import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/useAuth";
+import { getGameDetailsApi, getLikeGameApi, likeGameApi, unlikeGameApi } from "../../services/gameService";
 import { addGameToWishlistApi, getWishlistApi, removeGameFromWishlistApi } from "../../services/wishlistService";
 
 const useGame = () => {
     const { isLoggedIn } = useAuth();
 
+    const [gameId, setGameId] = useState<number | null>(null);
     const [images, setImages] = useState<string[]>([]);
-    const [isInWishlist, setIsInWishlist] = useState(false);
-    const [isLiked, setIsLiked] = useState(false);
 
     const { state } = useLocation();
 
     const queryClient = useQueryClient();
     const navigate = useNavigate();
 
+    const getGameId = () => (gameId ? { gameId } : { gameId: state?.game.id });
+
     const {
         data: game,
         isLoading: isLoadingGame,
         error: errorGame,
     } = useQuery({
-        queryKey: ["game", { id: state.game.id }],
+        enabled: state?.game !== undefined || state?.game !== null,
+        queryKey: ["game", getGameId()],
         queryFn: async () => {
-            const gameDetails: GameDetails = await getGameDetailsApi(state.game.id);
+            const gameDetails: GameDetails = await getGameDetailsApi(getGameId().gameId);
             const gameScreenshots: string[] = gameDetails.screenshots.map((screenshot) => screenshot.image);
 
             setImages([gameDetails.imageUrl, ...gameScreenshots]);
@@ -33,21 +35,21 @@ const useGame = () => {
         },
     });
 
-    const { isLoading: isLoadingWishlist } = useQuery({
+    const { isLoading: isLoadingWishlist, data: isInWishlist } = useQuery({
         enabled: isLoggedIn(),
-        queryKey: ["wishlist"],
+        queryKey: ["wishlist", getGameId()],
         queryFn: async () => {
-            const { isInWishlist } = await getWishlistApi(state.game.id);
-            setIsInWishlist(isInWishlist);
+            const { isInWishlist } = await getWishlistApi(getGameId().gameId);
+            return isInWishlist;
         },
     });
 
-    const { isLoading: isLoadingLike } = useQuery({
+    const { isLoading: isLoadingLike, data: isLiked } = useQuery({
         enabled: isLoggedIn(),
-        queryKey: ["like"],
+        queryKey: ["like", getGameId()],
         queryFn: async () => {
-            const { isLiked } = await getLikeGameApi(state.game.id);
-            setIsLiked(isLiked);
+            const { isLiked } = await getLikeGameApi(getGameId().gameId);
+            return isLiked;
         },
     });
 
@@ -59,13 +61,13 @@ const useGame = () => {
             }
 
             if (isInWishlist) {
-                await removeGameFromWishlistApi(state.game.id);
+                await removeGameFromWishlistApi(getGameId().gameId);
             } else {
-                await addGameToWishlistApi(state.game.id);
+                await addGameToWishlistApi(getGameId().gameId);
             }
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["wishlist"] });
+            queryClient.invalidateQueries({ queryKey: ["wishlist", getGameId()] });
         },
     });
 
@@ -77,13 +79,13 @@ const useGame = () => {
             }
 
             if (isLiked) {
-                await unlikeGameApi(state.game.id);
+                await unlikeGameApi(getGameId().gameId);
             } else {
-                await likeGameApi(state.game.id);
+                await likeGameApi(getGameId().gameId);
             }
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["like"] });
+            queryClient.invalidateQueries({ queryKey: ["like", getGameId()] });
         },
     });
 
@@ -100,6 +102,7 @@ const useGame = () => {
         isLoadingLike,
         isPendingWishlist,
         isPendingLike,
+        setGameId,
     };
 };
 

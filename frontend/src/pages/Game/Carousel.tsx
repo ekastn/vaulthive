@@ -38,7 +38,7 @@ const Carousel = ({ images }: Props) => {
             <div className="absolute bottom-4 right-0 left-0">
                 <div className="flex items-center justify-center gap-2">
                     {images.map((_, i) => (
-                        <div
+                        <div key={i}
                             className={`transition-all w-3 h-3 bg-base-content rounded-full ${imageIndex === i ? "p-2 w-8" : "bg-opacity-50"} `}
                         />
                     ))}
