@@ -6,12 +6,19 @@ spring:
         name: VaulthiveServer
 
     datasource:
-        url: ${VH_DATABASE_URL}?createDatabaseIfNotExist=true
+        url: ${VH_DATABASE_URL}
         username: ${VH_DATABASE_USERNAME}
         password: ${VH_DATABASE_PASSWORD}
-        driver-class-name: com.mysql.cj.jdbc.Driver
+        driver-class-name: org.postgresql.Driver
+
 
     jpa:
         hibernate:
-            ddl-auto: update
-        database: mysql
+            ddl-auto: create-drop
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+logging:
+    level:
+        org.springframework.security: DEBUG
+        org.hibernate.sql: DEBUG
